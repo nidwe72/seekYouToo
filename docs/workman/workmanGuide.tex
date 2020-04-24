@@ -1,0 +1,230 @@
+%% LyX 2.3.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{mathrsfs}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+\usepackage{physics}
+\usepackage{latexsym} 
+\usepackage{ mathrsfs }
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{Quantum chromodynamics on your smartphone using 'SeekYouToo' : A workman
+guide}
+
+\maketitle
+\textbf{Abstract}. Monte Carlo studies of non-ablian gauge theories
+emerged in the early eighties now establishing a standard tool of
+modern lattice quantum field theory. Due to the dramatic increase
+of mobile computational power in the 2010s it is now possible to carry
+out very basic simulations on smart phones. The author describes an
+according cross-platform implementation of $SU_{2}$ gluon dynamics
+and discusses some ditactical aspects.
+
+\section*{A basic scetch of quantum chromodynamics}
+
+\subsection*{Electrodynamics by concepts}
+
+Quantum chromodynamics (QCD) describes the strong interaction of quarks
+and gluons. Quarks make up hardons such as the protons and neutron
+forming themeselves the nuclei of atoms. Gluons glue together the
+quarks implementing the strong force. Quarks have spin 1/2 and thus
+are fermions (i.e. particles with half odd integer spin) in constrast
+to gluon carrying spin 1 and being bosons (particles with integer
+spin). Spin plays an esential statistical role : Fermions obey the
+Pauli exclusion principle stating that two identical fermions cannot
+occupy the same quantum state simultaneously. Thus electrons live
+in distinct shells around the nuclei of atoms. Gluons play the same
+role as photons, being the carriers of electromagnetic force, yet
+gluons can also interact with themselves.
+
+Electrodynamics describes the electromagnetics fields. Historically
+Gauss, Ampere and Faraday formulated distinct equations for the electric
+and magntics fields, $\mathbf{E}$ and $\mathbf{B}$.
+
+The magnetic field has no monopoles and thus divergenceless as expressed
+in Gauss's law $\divergence{\vb{B}}=0$ of the magntic field. As the
+divergence of a curl always vanishes the magnetic field can be written
+as the curl of its potential $\vb{B}=\curl{\vb{A}}$.
+
+Faradays law states a changing magnetic fileld induces a voltage in
+a coil. That is the path integral of the electric field around a closed
+loop equal to the negative rate if the change of the magnetic flux
+through the area enclosed by the loop: $\oint_{C}\vb{E}\cdot d\vb{r}=-\partial\vb{B}/\partial t$.
+Put in vector notation we have $\curl{\vb{E}}=-\partial\vb{B}/\partial t$.
+
+Using the magnetic potential $\vb{A}$ we have $\curl{(\vb{E}+\partial\vb{A}/\partial t)}=0$.
+When the curl of a vector field vanishes the field can always be written
+as the gradient of a scalar, giving $\vb{E}=-\grad{V}-\partial\vb{A}/\partial t$
+with $V$ being the electric potential.
+
+As the electric and magnetic field only depends on the changes of
+the accordings potentials we assume it is possible that we can change
+the potentials and obtains the same fields. If we make the transformation
+$\vb{A}\rightarrow\vb{A}+\grad{\lambda}$ the magnetic field $\vb{B}$
+does not change since the curl of a gradient vanishes, $\vb{B}=\curl{\vb{A+\grad{\lambda}}}=\curl{\vb{A}}$.
+However the electric field is changed, $\vb{E}=-\grad{V}-\partial\vb{A}/\partial t-\grad{\partial\lambda/\partial t}$
+$=-\grad{(V+\partial\lambda/\partial t)}-\partial\vb{A}/\partial t$.\\
+If another change $V\rightarrow V-\partial\lambda/\partial t$ is
+made also $\vb{E}$ remains unchanged. A partial choice of the potentials
+is called a gauge and can be done in many ways.
+
+Gauss's law for the electric field $\divergence{\vb{E}}=\rho/\epsilon_{0},$and
+Ampere's law $\curl{\vb{B}}=\mu_{0}\vb{J}+\mu_{0}\epsilon_{0}\partial\vb{E}/\partial t$
+have not been mentioned yet completing the set of the of the ``four
+macroscopic Maxwell equations''. Using an appropriate gauge condition,
+the Lorenz (Ludvig) gauge $\divergence{A}+\mu_{0}\epsilon_{0}(\partial V/\partial t)=0$
+lets one write the inhomogeneous Maxwell equations in a consise fashion
+\begin{eqnarray*}
+\Box^{2}V & = & \mu_{0}\epsilon_{0}\frac{\partial V}{\partial t}-\nabla{{}^2}V=\frac{\rho}{\epsilon_{0}}\\
+\Box^{2}\vb{A} & = & \mu_{0}\epsilon_{0}\frac{\partial\vb{A}}{\partial t}-\nabla^{2}\vb{A}=\mu_{0}\vb{J}
+\end{eqnarray*}
+\\
+Though the electric potential relates to static charges and the magnetic
+one to moving charges the expressional symmetry of this appealing
+formulation suggests that the distinction between electric and magnetic
+fields are a question about point of view and that the electric and
+magnetic fields form one field, the electromagnetic field.
+
+Maxwell carried out a relativistic formulation taking into account
+Lorentz (Hendrik) transformations. That is, he analysed how the fields
+transform when changing from a coordinate frame in Minkoskian spacetime
+to some other frame beeing boosted at constant velocity relative to
+the original frame. These transformation can be represented by 4x4
+real matrices $\Lambda$ (parametrized by the velocity $v$) such
+that a transformed spacetime-vector has the same scalar (using the
+Minkowski metric) as the original vector. The transfomation of the
+electric and magnetic field can be written in a concise form letting
+the Lorentz group matrices $\Lambda$ act on the electromagnetic field
+tensor
+\[
+F_{\mu\nu}=\left[\begin{array}{cccc}
+0 & -E_{x}/c & -E_{y}/c & -E_{z}/c\\
+E_{x}/c & 0 & -B_{z} & B_{y}\\
+E_{y}/c & B_{z} & 0 & -B_{x}\\
+E_{z}/c & -B_{y} & B_{x} & 0
+\end{array}\right]
+\]
+
+Using the four-vector potential given by $A_{\mu}=(V/c,A_{x},A_{y},A_{z})$
+and the four-current defined as $J^{\nu}=(c\rho,J_{x},J_{y},J_{z})$
+the inhomogeneous Maxwell equation can written in the very compact
+form
+\[
+\partial_{\mu}F^{\mu\nu}=\mu_{0}J^{\nu}
+\]
+
+with
+
+\[
+F^{\mu\nu}=\partial^{\mu}A^{\nu}-\partial^{\nu}A^{\mu}
+\]
+
+Note that in the 4-notaion greek indices run from 0 to 3 and the Einstein
+summation convention is applied when an index is repeated both lowered
+and raised, that is for two 4-vectors $X^{\mu}$and $Y_{\mu}$ the
+expression $X^{\mu}Y_{\mu}$ means $X^{\mu}Y_{\mu}=\sum_{\mu=0}^{3}X^{\mu}Y_{\mu}.$
+
+Also note that a second order tensor (a matrix) $X_{\mu\nu}$ with
+only lowered indices is called covariant and that according contravariant
+tensor (raised indices) is build by applying the metric tensor $\eta$
+\[
+X^{\mu\nu}=\eta^{\mu\alpha}\eta^{\nu\beta}X_{\alpha\beta};\quad\eta^{\mu\nu}=\left[\begin{array}{cccc}
+-1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]
+\]
+
+One important feature of the 4-vector notation to be mentioned is
+that the product of a contravariant and a covariant tensor $X^{\mu}X_{\mu}$
+is invariant under Lorentz transformation.
+
+It is easy to show that the Maxwell equation is the Euler-Lagrange
+equation of the Lagrangian 
+\[
+{L}=\mathscr{{L}}_{field}+\mathscr{{L}}_{interaction}=-\frac{1}{4\mu_{0}}F_{\mu\nu}F^{\mu\nu}-J^{\mu}A_{\mu}.
+\]
+
+
+\subsection*{Gauge theories and symmetries}
+
+Noether's theorem states that for every differentiable global symmetry
+of the action of a Lagrangian system there is a corresponding conservation
+law. For instance time translations give conversation of energy and
+spatial translations yield conservation of enery. If we have for example
+a a complex-valued scalar field $\phi$ being invariant under some
+$U(1)$ transformation, $\phi(x)\rightarrow e^{i\alpha}\phi(x)$ where
+$\alpha$ does not depend on position $x$ one can construct an according
+conserved Noether current. If however we have a position-dependent
+$\alpha(x)$ and the Lagrangain involves derivatives we obtain unwanted
+term destroying the invariance, because at each point we have different
+transformation roles. In order to have obtain local symmetry we tweak
+the partial derivative introducing a new gauge potential $A_{\mu}$:
+The covariant devirative 
+\[
+D_{\mu}=\partial_{\mu}-igA_{\mu}
+\]
+\\
+eliminates the terms indroduced by the partial derivative, argueing
+as follows. We assume that$A_{\mu}$ transforms as $A_{\mu}\rightarrow A\mu+(1/g)\partial\mu\alpha(x)$.
+By comparing to the the gauge discussed for the electromegnetic field,
+$V\rightarrow V-\partial\lambda/\partial t$ and $\vb{A}\rightarrow\vb{A}+\grad{\lambda}$)
+, we see that $\lambda$ is equivalent to $\alpha(x)/g$ with $g$
+being the coupling constant (being $e$ in the case of electrodynamics).
+Using some algebra we see that the covariant derivative applied to
+the phase transformed field together with the gauge transformation
+gives us an expression in which the covariant derivative itself remains
+does not depend on the phase:
+\begin{eqnarray*}
+D_{\mu} & \rightarrow & \left[\partial_{\mu}+ig\left(A_{\mu}-\frac{1}{g}\partial_{\mu}\alpha(x)\right)\right]e^{i\alpha(x)}\phi=\\
+ & = & e^{i\alpha(x)}\partial_{\mu}\phi\\
+ &  & +ie^{i\alpha(x)}\phi\partial_{\mu}\alpha(x)+igA_{\mu}e^{i\alpha(x)}\phi\\
+ &  & -ie^{i\alpha(x)}\phi\partial_{\mu}\alpha(x)\\
+ & = & e^{i\alpha(x)}\left(\partial_{\mu}-igA_{\mu}\right)\phi\\
+ & = & e^{i\alpha(x)}D_{\mu}\phi
+\end{eqnarray*}
+
+As the derivative $D_{\mu}$ transforms the same way as the field
+$\phi$ it is the name ``covariant'' suits pretty well.
+
+Using covariant derivatives we can thus construct meaningful Lagrangians
+preserving local symmetry. The simple real gauge theory is quantum
+electrodynamics (QED) augmenting electrodynamics by fermions (for
+instance electrons) described by Dirac spinors $\psi$:
+\begin{eqnarray*}
+{L} & = & {L}_{Dirac}+{L}_{Maxwell}+{L}_{interaction}\\
+ & = & \bar{\psi}\left(i\gamma^{\mu}\partial\mu-m\right)\psi-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}-e\bar{\psi}\gamma^{\mu}\psi A_{\mu}
+\end{eqnarray*}
+\\
+Using the covariant derivative the Lagrangian reads
+\[
+{L}=\bar{\psi}\left(i\gamma^{\mu}D_{\mu}-m\right)\psi-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}
+\]
+and one obtains as the equation of motions for the fermionic wave
+function $\psi$ and the electromagnetic potential $A_{\mu}$
+\begin{eqnarray*}
+\left(i\gamma^{\mu}D_{\mu}-m\right)\psi & = & 0\\
+\partial_{\mu}F^{\mu\nu} & = & e\bar{\psi}\gamma^{\nu}\psi
+\end{eqnarray*}
+
+The symmetry group of QED is $U(1)$, that is the Lagrangian is invariant
+under $\psi\rightarrow e^{i\alpha(x)}\psi$ and the according gauge
+field is the electromagnetic potential.
+
+$U(1)$ is a simple non-trivial symetry group and we now turn to the
+case to more involved case that the groups in question are non-abelian.
+Yang and Mills therefore considered transformations of the form $\phi\rightarrow\exp\left(i\alpha^{a}t^{a}\right)\phi$
+where ...
+
+\subsection*{Quantum chromodynamics}
+\end{document}

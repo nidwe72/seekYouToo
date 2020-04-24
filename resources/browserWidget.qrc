@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/browserWidget">
+        <file>browserWidget.qml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
+  
+  
+  <title>Quantum chromodynamics on your smartphone using ’SeekYouToo’ : A workman guide</title>
+  <style>
+
+
+* {
+	
+
+    text-shadow: none !important;
+    background:black!important;
+    color:#1aff1a !important;
+    border-radius: 0px !important;
+border-left-width: 0px !important;
+    border-right-width: 0px !important;	
+    
+}
+
+
+ui-collapsible-inset .ui-collapsible-heading .ui-btn {
+    
+	border: 0px solid green !important;
+	border-color: transparent;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;    	
+	border-left-width: 0px;
+	border-right-width: 0px;	
+}
+
+
+
+.ui-page-theme-a .ui-btn, html .ui-bar-a .ui-btn, html .ui-body-a .ui-btn, html body .ui-group-theme-a .ui-btn, html head+body .ui-btn.ui-btn-a, .ui-page-theme-a .ui-btn:visited, html .ui-bar-a .ui-btn:visited, html .ui-body-a .ui-btn:visited, html body .ui-group-theme-a .ui-btn:visited, html head+body .ui-btn.ui-btn-a:visited {
+	border: 0px solid green !important;
+	border-color: transparent;
+	
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;    	
+}
+
+p{
+	font-size: 0.8em;
+	line-height: 1.5;
+	padding-top:20px;
+	text-align: justify;
+}
+
+  </style>
+    <script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path["Contrib"] = "https://cdn.mathjax.org/mathjax/contrib";
+    MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+        MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+            cancel: ["Extension","cancel"],
+            bcancel: ["Extension","cancel"],
+            xcancel: ["Extension","cancel"],
+            cancelto: ["Extension","cancel"]
+        });
+    });
+    MathJax.Hub.Config({
+        TeX: {
+            equationNumbers: { autoNumber: "AMS"},
+            extensions: ["[Contrib]/physics/physics.js", "[Contrib]/siunitx/siunitx.js"]
+        },
+	"CommonHTML": {		
+		scale: 80
+	}	
+	
+    });
+</script>  
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>  
+
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div data-role="page" id="pageone" >
+
+<div style="margin:10px;">
+<header id="title-block-header">    
+<h1 class="title" style="text-align:center">Quantum chromodynamics on your smartphone using ’SeekYouToo’ : A workman guide</h1>
+</header>
+
+<p><strong>Abstract</strong>. Monte Carlo studies of non-ablian gauge theories emerged in the early eighties now establishing a standard tool of modern lattice quantum field theory. Due to the dramatic increase of mobile computational power in the 2010s it is now possible to carry out very basic simulations on smart phones. The author describes an according cross-platform implementation of <span class="math inline">\(SU_{2}\)</span> gluon dynamics and discusses some ditactical aspects.</p>
+</div>
+<div data-role="collapsible">
+<h1 class="unnumbered" id="a-basic-scetch-of-quantum-chromodynamics">A basic scetch of quantum chromodynamics</h1>
+<h2 class="unnumbered" id="electrodynamics-by-concepts">Electrodynamics by concepts</h2>
+<p>Quantum chromodynamics (QCD) describes the strong interaction of quarks and gluons. Quarks make up hardons such as the protons and neutron forming themeselves the nuclei of atoms. Gluons glue together the quarks implementing the strong force. Quarks have spin 1/2 and thus are fermions (i.e. particles with half odd integer spin) in constrast to gluon carrying spin 1 and being bosons (particles with integer spin). Spin plays an esential statistical role : Fermions obey the Pauli exclusion principle stating that two identical fermions cannot occupy the same quantum state simultaneously. Thus electrons live in distinct shells around the nuclei of atoms. Gluons play the same role as photons, being the carriers of electromagnetic force, yet gluons can also interact with themselves.</p>
+<p>Electrodynamics describes the electromagnetics fields. Historically Gauss, Ampere and Faraday formulated distinct equations for the electric and magntics fields, <span class="math inline">\(\mathbf{E}\)</span> and <span class="math inline">\(\mathbf{B}\)</span>.</p>
+<p>The magnetic field has no monopoles and thus divergenceless as expressed in Gauss’s law <span class="math inline">\(\divergence{\vb{B}}=0\)</span> of the magntic field. As the divergence of a curl always vanishes the magnetic field can be written as the curl of its potential <span class="math inline">\(\vb{B}=\curl{\vb{A}}\)</span>.</p>
+<p>Faradays law states a changing magnetic fileld induces a voltage in a coil. That is the path integral of the electric field around a closed loop equal to the negative rate if the change of the magnetic flux through the area enclosed by the loop: <span class="math inline">\(\oint_{C}\vb{E}\cdot d\vb{r}=-\partial\vb{B}/\partial t\)</span>. Put in vector notation we have <span class="math inline">\(\curl{\vb{E}}=-\partial\vb{B}/\partial t\)</span>.</p>
+<p>Using the magnetic potential <span class="math inline">\(\vb{A}\)</span> we have <span class="math inline">\(\curl{(\vb{E}+\partial\vb{A}/\partial t)}=0\)</span>. When the curl of a vector field vanishes the field can always be written as the gradient of a scalar, giving <span class="math inline">\(\vb{E}=-\grad{V}-\partial\vb{A}/\partial t\)</span> with <span class="math inline">\(V\)</span> being the electric potential.</p>
+<p>As the electric and magnetic field only depends on the changes of the accordings potentials we assume it is possible that we can change the potentials and obtains the same fields. If we make the transformation <span class="math inline">\(\vb{A}\rightarrow\vb{A}+\grad{\lambda}\)</span> the magnetic field <span class="math inline">\(\vb{B}\)</span> does not change since the curl of a gradient vanishes, <span class="math inline">\(\vb{B}=\curl{\vb{A+\grad{\lambda}}}=\curl{\vb{A}}\)</span>. However the electric field is changed, <span class="math inline">\(\vb{E}=-\grad{V}-\partial\vb{A}/\partial t-\grad{\partial\lambda/\partial t}\)</span> <span class="math inline">\(=-\grad{(V+\partial\lambda/\partial t)}-\partial\vb{A}/\partial t\)</span>.<br />
+If another change <span class="math inline">\(V\rightarrow V-\partial\lambda/\partial t\)</span> is made also <span class="math inline">\(\vb{E}\)</span> remains unchanged. A partial choice of the potentials is called a gauge and can be done in many ways.</p>
+<p>Gauss’s law for the electric field <span class="math inline">\(\divergence{\vb{E}}=\rho/\epsilon_{0},\)</span>and Ampere’s law <span class="math inline">\(\curl{\vb{B}}=\mu_{0}\vb{J}+\mu_{0}\epsilon_{0}\partial\vb{E}/\partial t\)</span> have not been mentioned yet completing the set of the of the “four macroscopic Maxwell equations”. Using an appropriate gauge condition, the Lorenz (Ludvig) gauge <span class="math inline">\(\divergence{A}+\mu_{0}\epsilon_{0}(\partial V/\partial t)=0\)</span> lets one write the inhomogeneous Maxwell equations in a consise fashion <span class="math display">\[\begin{aligned}
+\Box^{2}V &amp; = &amp; \mu_{0}\epsilon_{0}\frac{\partial V}{\partial t}-\nabla{{}^2}V=\frac{\rho}{\epsilon_{0}}\\
+\Box^{2}\vb{A} &amp; = &amp; \mu_{0}\epsilon_{0}\frac{\partial\vb{A}}{\partial t}-\nabla^{2}\vb{A}=\mu_{0}\vb{J}\end{aligned}\]</span><br />
+Though the electric potential relates to static charges and the magnetic one to moving charges the expressional symmetry of this appealing formulation suggests that the distinction between electric and magnetic fields are a question about point of view and that the electric and magnetic fields form one field, the electromagnetic field.</p>
+<p>Maxwell carried out a relativistic formulation taking into account Lorentz (Hendrik) transformations. That is, he analysed how the fields transform when changing from a coordinate frame in Minkoskian spacetime to some other frame beeing boosted at constant velocity relative to the original frame. These transformation can be represented by 4x4 real matrices <span class="math inline">\(\Lambda\)</span> (parametrized by the velocity <span class="math inline">\(v\)</span>) such that a transformed spacetime-vector has the same scalar (using the Minkowski metric) as the original vector. The transfomation of the electric and magnetic field can be written in a concise form letting the Lorentz group matrices <span class="math inline">\(\Lambda\)</span> act on the electromagnetic field tensor <span class="math display">\[F_{\mu\nu}=\left[\begin{array}{cccc}
+0 &amp; -E_{x}/c &amp; -E_{y}/c &amp; -E_{z}/c\\
+E_{x}/c &amp; 0 &amp; -B_{z} &amp; B_{y}\\
+E_{y}/c &amp; B_{z} &amp; 0 &amp; -B_{x}\\
+E_{z}/c &amp; -B_{y} &amp; B_{x} &amp; 0
+\end{array}\right]\]</span></p>
+<p>Using the four-vector potential given by <span class="math inline">\(A_{\mu}=(V/c,A_{x},A_{y},A_{z})\)</span> and the four-current defined as <span class="math inline">\(J^{\nu}=(c\rho,J_{x},J_{y},J_{z})\)</span> the inhomogeneous Maxwell equation can written in the very compact form <span class="math display">\[\partial_{\mu}F^{\mu\nu}=\mu_{0}J^{\nu}\]</span></p>
+<p>with</p>
+<p><span class="math display">\[F^{\mu\nu}=\partial^{\mu}A^{\nu}-\partial^{\nu}A^{\mu}\]</span></p>
+<p>Note that in the 4-notaion greek indices run from 0 to 3 and the Einstein summation convention is applied when an index is repeated both lowered and raised, that is for two 4-vectors <span class="math inline">\(X^{\mu}\)</span>and <span class="math inline">\(Y_{\mu}\)</span> the expression <span class="math inline">\(X^{\mu}Y_{\mu}\)</span> means <span class="math inline">\(X^{\mu}Y_{\mu}=\sum_{\mu=0}^{3}X^{\mu}Y_{\mu}.\)</span></p>
+<p>Also note that a second order tensor (a matrix) <span class="math inline">\(X_{\mu\nu}\)</span> with only lowered indices is called covariant and that according contravariant tensor (raised indices) is build by applying the metric tensor <span class="math inline">\(\eta\)</span> <span class="math display">\[X^{\mu\nu}=\eta^{\mu\alpha}\eta^{\nu\beta}X_{\alpha\beta};\quad\eta^{\mu\nu}=\left[\begin{array}{cccc}
+-1 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right]\]</span></p>
+<p>One important feature of the 4-vector notation to be mentioned is that the product of a contravariant and a covariant tensor <span class="math inline">\(X^{\mu}X_{\mu}\)</span> is invariant under Lorentz transformation.</p>
+<p>It is easy to show that the Maxwell equation is the Euler-Lagrange equation of the Lagrangian <span class="math display">\[{L}=\mathscr{{L}}_{field}+\mathscr{{L}}_{interaction}=-\frac{1}{4\mu_{0}}F_{\mu\nu}F^{\mu\nu}-J^{\mu}A_{\mu}.\]</span></p>
+<h2 class="unnumbered" id="gauge-theories-and-symmetries">Gauge theories and symmetries</h2>
+<p>Noether’s theorem states that for every differentiable global symmetry of the action of a Lagrangian system there is a corresponding conservation law. For instance time translations give conversation of energy and spatial translations yield conservation of enery. If we have for example a a complex-valued scalar field <span class="math inline">\(\phi\)</span> being invariant under some <span class="math inline">\(U(1)\)</span> transformation, <span class="math inline">\(\phi(x)\rightarrow e^{i\alpha}\phi(x)\)</span> where <span class="math inline">\(\alpha\)</span> does not depend on position <span class="math inline">\(x\)</span> one can construct an according conserved Noether current. If however we have a position-dependent <span class="math inline">\(\alpha(x)\)</span> and the Lagrangain involves derivatives we obtain unwanted term destroying the invariance, because at each point we have different transformation roles. In order to have obtain local symmetry we tweak the partial derivative introducing a new gauge potential <span class="math inline">\(A_{\mu}\)</span>: The covariant devirative <span class="math display">\[D_{\mu}=\partial_{\mu}-igA_{\mu}\]</span><br />
+eliminates the terms indroduced by the partial derivative, argueing as follows. We assume that<span class="math inline">\(A_{\mu}\)</span> transforms as <span class="math inline">\(A_{\mu}\rightarrow A\mu+(1/g)\partial\mu\alpha(x)\)</span>. By comparing to the the gauge discussed for the electromegnetic field, <span class="math inline">\(V\rightarrow V-\partial\lambda/\partial t\)</span> and <span class="math inline">\(\vb{A}\rightarrow\vb{A}+\grad{\lambda}\)</span>) , we see that <span class="math inline">\(\lambda\)</span> is equivalent to <span class="math inline">\(\alpha(x)/g\)</span> with <span class="math inline">\(g\)</span> being the coupling constant (being <span class="math inline">\(e\)</span> in the case of electrodynamics). Using some algebra we see that the covariant derivative applied to the phase transformed field together with the gauge transformation gives us an expression in which the covariant derivative itself remains does not depend on the phase: <span class="math display">\[\begin{aligned}
+D_{\mu} &amp; \rightarrow &amp; \left[\partial_{\mu}+ig\left(A_{\mu}-\frac{1}{g}\partial_{\mu}\alpha(x)\right)\right]e^{i\alpha(x)}\phi=\\
+ &amp; = &amp; e^{i\alpha(x)}\partial_{\mu}\phi\\
+ &amp;  &amp; +ie^{i\alpha(x)}\phi\partial_{\mu}\alpha(x)+igA_{\mu}e^{i\alpha(x)}\phi\\
+ &amp;  &amp; -ie^{i\alpha(x)}\phi\partial_{\mu}\alpha(x)\\
+ &amp; = &amp; e^{i\alpha(x)}\left(\partial_{\mu}-igA_{\mu}\right)\phi\\
+ &amp; = &amp; e^{i\alpha(x)}D_{\mu}\phi\end{aligned}\]</span></p>
+<p>As the derivative <span class="math inline">\(D_{\mu}\)</span> transforms the same way as the field <span class="math inline">\(\phi\)</span> it is the name “covariant” suits pretty well.</p>
+<p>Using covariant derivatives we can thus construct meaningful Lagrangians preserving local symmetry. The simple real gauge theory is quantum electrodynamics (QED) augmenting electrodynamics by fermions (for instance electrons) described by Dirac spinors <span class="math inline">\(\psi\)</span>: <span class="math display">\[\begin{aligned}
+{L} &amp; = &amp; {L}_{Dirac}+{L}_{Maxwell}+{L}_{interaction}\\
+ &amp; = &amp; \bar{\psi}\left(i\gamma^{\mu}\partial\mu-m\right)\psi-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}-e\bar{\psi}\gamma^{\mu}\psi A_{\mu}\end{aligned}\]</span><br />
+Using the covariant derivative the Lagrangian reads <span class="math display">\[{L}=\bar{\psi}\left(i\gamma^{\mu}D_{\mu}-m\right)\psi-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}\]</span> and one obtains as the equation of motions for the fermionic wave function <span class="math inline">\(\psi\)</span> and the electromagnetic potential <span class="math inline">\(A_{\mu}\)</span> <span class="math display">\[\begin{aligned}
+\left(i\gamma^{\mu}D_{\mu}-m\right)\psi &amp; = &amp; 0\\
+\partial_{\mu}F^{\mu\nu} &amp; = &amp; e\bar{\psi}\gamma^{\nu}\psi\end{aligned}\]</span></p>
+<p>The symmetry group of QED is <span class="math inline">\(U(1)\)</span>, that is the Lagrangian is invariant under <span class="math inline">\(\psi\rightarrow e^{i\alpha(x)}\psi\)</span> and the according gauge field is the electromagnetic potential.</p>
+<p><span class="math inline">\(U(1)\)</span> is a simple non-trivial symetry group and we now turn to the case to more involved case that the groups in question are non-abelian. Yang and Mills therefore considered transformations of the form <span class="math inline">\(\phi\rightarrow\exp\left(i\alpha^{a}t^{a}\right)\phi\)</span> where ...</p>
+<h2 class="unnumbered" id="quantum-chromodynamics">Quantum chromodynamics</h2>
+        </div>
+</div>	
+</body>
+</html>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/docs">
+        <file>docs/foo2.svg</file>
+        <file>docs/foo.svg</file>
+        <file>docs/browserWidget.qml</file>
+        <file>docs/introductoryGuide.html</file>
+    </qresource>
+</RCC>

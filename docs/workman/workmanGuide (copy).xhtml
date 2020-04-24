@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="GENERATOR" content="LyX 2.3.2" />
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<title>Quantum chromodynamics on your smartphone using 'SeekYouToo' : A workman guide</title>
+<style type='text/css'>
+/* Layout-provided Styles */
+h1.title {
+font-size: x-large;
+margin-bottom: 1ex;
+text-align: center;
+
+}
+div.standard {
+	margin-bottom: 2ex;
+}
+h2.section_ {
+font-weight: bold;
+font-size: x-large;
+margin-top: 1.3ex;
+margin-bottom: 0.7ex;
+text-align: left;
+
+}
+h3.subsection_ {
+font-weight: bold;
+font-size: large;
+margin-top: 0.9ex;
+margin-bottom: 0.5ex;
+text-align: left;
+
+}
+
+
+</style>
+</head>
+<body dir="auto">
+<h1 class="title" id='magicparlabel-9664'>Quantum chromodynamics on your smartphone using 'SeekYouToo' : A workman guide</h1>
+<div class="standard" id='magicparlabel-9665'><b>Abstract</b>. Monte Carlo studies of non-ablian gauge theories emerged in the early eighties now establishing a standard tool of modern lattice quantum field theory. Due to the dramatic increase of mobile computational power in the 2010s it is now possible to carry out very basic simulations on smart phones. The author describes an according cross-platform implementation of <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi>S</mi>
+   <msub>
+    <mrow><mi>U</mi>
+    </mrow>
+    <mrow><mn>2</mn>
+    </mrow>
+   </msub>
+  </mrow>
+ </mrow></math> gluon dynamics and discusses some ditactical aspects.</div>
+<h2 class="section_" id='magicparlabel-9666'>A basic scetch of quantum chromodynamics</h2>
+<h3 class="subsection_" id='magicparlabel-9667'>Electrodynamics by concepts</h3>
+<div class="standard" id='magicparlabel-9668'>Quantum chromodynamics (QCD) describes the strong interaction of quarks and gluons. Quarks make up hardons such as the protons and neutron forming themeselves the nuclei of atoms. Gluons glue together the quarks implementing the strong force. Quarks have spin 1/2 and thus are fermions (i.e. particles with half odd integer spin) in constrast to gluon carrying spin 1 and being bosons (particles with integer spin). Spin plays an esential statistical role : Fermions obey the Pauli exclusion principle stating that two identical fermions cannot occupy the same quantum state simultaneously. Thus electrons live in distinct shells around the nuclei of atoms. Gluons play the same role as photons, being the carriers of electromagnetic force, yet gluons can also interact with themselves.</div>
+
+<div class="standard" id='magicparlabel-9669'>Electrodynamics describes the electromagnetics fields. Historically Gauss, Ampere and Faraday formulated distinct equations for the electric and magntics fields, <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mstyle mathvariant='bold'><mi>E</mi>
+  </mstyle>
+ </mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mstyle mathvariant='bold'><mi>B</mi>
+  </mstyle>
+ </mrow></math>.</div>
+
+<div class="standard" id='magicparlabel-9670'>The magnetic field has no monopoles and thus divergenceless as expressed in Gauss's law 
+<span style = "text-align: center;"><img src="lyxpreviewTJ26911.png" alt="Mathematical Equation" />
+</span>
+ of the magntic field. As the divergence of a curl always vanishes the magnetic field can be written as the curl of its potential 
+<span style = "text-align: center;"><img src="lyxpreviewXM26911.png" alt="Mathematical Equation" />
+</span>
+.</div>
+
+<div class="standard" id='magicparlabel-9671'>Faradays law states a changing magnetic fileld induces a voltage in a coil. That is the path integral of the electric field around a closed loop equal to the negative rate if the change of the magnetic flux through the area enclosed by the loop: 
+<span style = "text-align: center;"><img src="lyxpreviewLh26911.png" alt="Mathematical Equation" />
+</span>
+. Put in vector notation we have 
+<span style = "text-align: center;"><img src="lyxpreviewnS26911.png" alt="Mathematical Equation" />
+</span>
+.</div>
+
+<div class="standard" id='magicparlabel-9672'>Using the magnetic potential 
+<span style = "text-align: center;"><img src="lyxpreviewkn26911.png" alt="Mathematical Equation" />
+</span>
+ we have 
+<span style = "text-align: center;"><img src="lyxpreviewTi26911.png" alt="Mathematical Equation" />
+</span>
+. When the curl of a vector field vanishes the field can always be written as the gradient of a scalar, giving 
+<span style = "text-align: center;"><img src="lyxpreviewwZ26911.png" alt="Mathematical Equation" />
+</span>
+ with <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi>V</mi>
+ </mrow></math> being the electric potential.</div>
+
+<div class="standard" id='magicparlabel-9673'>As the electric and magnetic field only depends on the changes of the accordings potentials we assume it is possible that we can change the potentials and obtains the same fields. If we make the transformation 
+<span style = "text-align: center;"><img src="lyxpreviewTT26911.png" alt="Mathematical Equation" />
+</span>
+ the magnetic field 
+<span style = "text-align: center;"><img src="lyxpreviewjd26911.png" alt="Mathematical Equation" />
+</span>
+ does not change since the curl of a gradient vanishes, 
+<span style = "text-align: center;"><img src="lyxpreviewBC26911.png" alt="Mathematical Equation" />
+</span>
+. However the electric field is changed, 
+<span style = "text-align: center;"><img src="lyxpreviewHf26911.png" alt="Mathematical Equation" />
+</span>
+
+<br />
+
+If another change <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi>V</mi><mo> &rarr; </mo><mi>V</mi><mo>-</mo><mi> &part; </mi><mi> &lambda; </mi><mo>/</mo><mi> &part; </mi><mi>t</mi>
+  </mrow>
+ </mrow></math> is made also 
+<span style = "text-align: center;"><img src="lyxpreviewyJ26911.png" alt="Mathematical Equation" />
+</span>
+ remains unchanged. A partial choice of the potentials is called a gauge and can be done in many ways.</div>
+
+<div class="standard" id='magicparlabel-9674'>Gauss's law for the electric field 
+<span style = "text-align: center;"><img src="lyxpreviewFW26911.png" alt="Mathematical Equation" />
+</span>
+and Ampere's law 
+<span style = "text-align: center;"><img src="lyxpreviewwX26911.png" alt="Mathematical Equation" />
+</span>
+ have not been mentioned yet completing the set of the of the &ldquo;four macroscopic Maxwell equations&rdquo;. Using an appropriate gauge condition, the Lorenz (Ludvig) gauge 
+<span style = "text-align: center;"><img src="lyxpreviewZb26911.png" alt="Mathematical Equation" />
+</span>
+ lets one write the inhomogeneous Maxwell equations in a consise fashion
+<div style = "text-align: center;"><img src="lyxpreviewth26911.png" alt="Mathematical Equation" />
+</div>
+
+<br />
+
+Though the electric potential relates to static charges and the magnetic one to moving charges the expressional symmetry of this appealing formulation suggests that the distinction between electric and magnetic fields are a question about point of view and that the electric and magnetic fields form one field, the electromagnetic field.</div>
+
+<div class="standard" id='magicparlabel-9675'>Maxwell carried out a relativistic formulation taking into account Lorentz (Hendrik) transformations. That is, he analysed how the fields transform when changing from a coordinate frame in Minkoskian spacetime to some other frame beeing boosted at constant velocity relative to the original frame. These transformation can be represented by 4x4 real matrices <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mo> &Lambda; </mo>
+ </mrow></math> (parametrized by the velocity <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi>v</mi>
+ </mrow></math>) such that a transformed spacetime-vector has the same scalar (using the Minkowski metric) as the original vector. The transfomation of the electric and magnetic field can be written in a concise form letting the Lorentz group matrices <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mo> &Lambda; </mo>
+ </mrow></math> act on the electromagnetic field tensor<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msub>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msub><mo>=</mo><mo form='prefix' fence='true' stretchy='true' symmetric='true' lspace='thinmathspace'>[</mo>
+   <mtable>
+    <mtr>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd>
+      <mrow><mo>-</mo>
+       <msub>
+        <mrow><mi>E</mi>
+        </mrow>
+        <mrow><mi>x</mi>
+        </mrow>
+       </msub><mo>/</mo><mi>c</mi>
+      </mrow>
+     </mtd>
+     <mtd>
+      <mrow><mo>-</mo>
+       <msub>
+        <mrow><mi>E</mi>
+        </mrow>
+        <mrow><mi>y</mi>
+        </mrow>
+       </msub><mo>/</mo><mi>c</mi>
+      </mrow>
+     </mtd>
+     <mtd>
+      <mrow><mo>-</mo>
+       <msub>
+        <mrow><mi>E</mi>
+        </mrow>
+        <mrow><mi>z</mi>
+        </mrow>
+       </msub><mo>/</mo><mi>c</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd>
+      <mrow>
+       <msub>
+        <mrow><mi>E</mi>
+        </mrow>
+        <mrow><mi>x</mi>
+        </mrow>
+       </msub><mo>/</mo><mi>c</mi>
+      </mrow>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd>
+      <mrow><mo>-</mo>
+       <msub>
+        <mrow><mi>B</mi>
+        </mrow>
+        <mrow><mi>z</mi>
+        </mrow>
+       </msub>
+      </mrow>
+     </mtd>
+     <mtd>
+      <msub>
+       <mrow><mi>B</mi>
+       </mrow>
+       <mrow><mi>y</mi>
+       </mrow>
+      </msub>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd>
+      <mrow>
+       <msub>
+        <mrow><mi>E</mi>
+        </mrow>
+        <mrow><mi>y</mi>
+        </mrow>
+       </msub><mo>/</mo><mi>c</mi>
+      </mrow>
+     </mtd>
+     <mtd>
+      <msub>
+       <mrow><mi>B</mi>
+       </mrow>
+       <mrow><mi>z</mi>
+       </mrow>
+      </msub>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd>
+      <mrow><mo>-</mo>
+       <msub>
+        <mrow><mi>B</mi>
+        </mrow>
+        <mrow><mi>x</mi>
+        </mrow>
+       </msub>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd>
+      <mrow>
+       <msub>
+        <mrow><mi>E</mi>
+        </mrow>
+        <mrow><mi>z</mi>
+        </mrow>
+       </msub><mo>/</mo><mi>c</mi>
+      </mrow>
+     </mtd>
+     <mtd>
+      <mrow><mo>-</mo>
+       <msub>
+        <mrow><mi>B</mi>
+        </mrow>
+        <mrow><mi>y</mi>
+        </mrow>
+       </msub>
+      </mrow>
+     </mtd>
+     <mtd>
+      <msub>
+       <mrow><mi>B</mi>
+       </mrow>
+       <mrow><mi>x</mi>
+       </mrow>
+      </msub>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+    </mtr>
+   </mtable><mo form='postfix' fence='true' stretchy='true' symmetric='true' lspace='thinmathspace'>]</mo>
+  </mrow>
+ </mrow></math></div>
+
+<div class="standard" id='magicparlabel-9676'>Using the four-vector potential given by <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msub>
+    <mrow><mi>A</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mo>=</mo><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+   <mrow><mi>V</mi><mo>/</mo><mi>c</mi><mo>,</mo>
+    <msub>
+     <mrow><mi>A</mi>
+     </mrow>
+     <mrow><mi>x</mi>
+     </mrow>
+    </msub><mo>,</mo>
+    <msub>
+     <mrow><mi>A</mi>
+     </mrow>
+     <mrow><mi>y</mi>
+     </mrow>
+    </msub><mo>,</mo>
+    <msub>
+     <mrow><mi>A</mi>
+     </mrow>
+     <mrow><mi>z</mi>
+     </mrow>
+    </msub>
+   </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math> and the four-current defined as <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msup>
+    <mrow><mi>J</mi>
+    </mrow>
+    <mrow><mi> &nu; </mi>
+    </mrow>
+   </msup><mo>=</mo><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+   <mrow><mi>c</mi><mi> &rho; </mi><mo>,</mo>
+    <msub>
+     <mrow><mi>J</mi>
+     </mrow>
+     <mrow><mi>x</mi>
+     </mrow>
+    </msub><mo>,</mo>
+    <msub>
+     <mrow><mi>J</mi>
+     </mrow>
+     <mrow><mi>y</mi>
+     </mrow>
+    </msub><mo>,</mo>
+    <msub>
+     <mrow><mi>J</mi>
+     </mrow>
+     <mrow><mi>z</mi>
+     </mrow>
+    </msub>
+   </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math> the inhomogeneous Maxwell equation can written in the very compact form<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msub>
+    <mrow><mi> &part; </mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub>
+   <msup>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msup><mo>=</mo>
+   <msub>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+    <mrow><mn>0</mn>
+    </mrow>
+   </msub>
+   <msup>
+    <mrow><mi>J</mi>
+    </mrow>
+    <mrow><mi> &nu; </mi>
+    </mrow>
+   </msup>
+  </mrow>
+ </mrow></math></div>
+
+<div class="standard" id='magicparlabel-9677'>with</div>
+
+<div class="standard" id='magicparlabel-9678'><math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msup>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msup><mo>=</mo>
+   <msup>
+    <mrow><mi> &part; </mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+   <msup>
+    <mrow><mi>A</mi>
+    </mrow>
+    <mrow><mi> &nu; </mi>
+    </mrow>
+   </msup><mo>-</mo>
+   <msup>
+    <mrow><mi> &part; </mi>
+    </mrow>
+    <mrow><mi> &nu; </mi>
+    </mrow>
+   </msup>
+   <msup>
+    <mrow><mi>A</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+  </mrow>
+ </mrow></math></div>
+
+<div class="standard" id='magicparlabel-9679'>Note that in the 4-notaion greek indices run from 0 to 3 and the Einstein summation convention is applied when an index is repeated both lowered and raised, that is for two 4-vectors <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msup>
+   <mrow><mi>X</mi>
+   </mrow>
+   <mrow><mi> &mu; </mi>
+   </mrow>
+  </msup>
+ </mrow></math>and <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msub>
+   <mrow><mi>Y</mi>
+   </mrow>
+   <mrow><mi> &mu; </mi>
+   </mrow>
+  </msub>
+ </mrow></math> the expression <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msup>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+   <msub>
+    <mrow><mi>Y</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub>
+  </mrow>
+ </mrow></math> means <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msup>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+   <msub>
+    <mrow><mi>Y</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mo>=</mo>
+   <msubsup>
+    <mrow><mo> &sum; </mo>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mo>=</mo><mn>0</mn>
+     </mrow>
+    </mrow>
+    <mrow><mn>3</mn>
+    </mrow>
+   </msubsup>
+   <msup>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+   <msub>
+    <mrow><mi>Y</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mn>.</mn>
+  </mrow>
+ </mrow></math></div>
+
+<div class="standard" id='magicparlabel-9680'>Also note that a second order tensor (a matrix) <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msub>
+   <mrow><mi>X</mi>
+   </mrow>
+   <mrow>
+    <mrow><mi> &mu; </mi><mi> &nu; </mi>
+    </mrow>
+   </mrow>
+  </msub>
+ </mrow></math> with only lowered indices is called covariant and that according contravariant tensor (raised indices) is build by applying the metric tensor <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &eta; </mi>
+ </mrow></math> <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msup>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msup><mo>=</mo>
+   <msup>
+    <mrow><mi> &eta; </mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &alpha; </mi>
+     </mrow>
+    </mrow>
+   </msup>
+   <msup>
+    <mrow><mi> &eta; </mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &nu; </mi><mi> &beta; </mi>
+     </mrow>
+    </mrow>
+   </msup>
+   <msub>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &alpha; </mi><mi> &beta; </mi>
+     </mrow>
+    </mrow>
+   </msub><mo>;</mo><mspace width="20px" />
+   <msup>
+    <mrow><mi> &eta; </mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msup><mo>=</mo><mo form='prefix' fence='true' stretchy='true' symmetric='true' lspace='thinmathspace'>[</mo>
+   <mtable>
+    <mtr>
+     <mtd>
+      <mrow><mo>-</mo><mn>1</mn>
+      </mrow>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>1</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>1</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>0</mn>
+     </mtd>
+     <mtd><mn>1</mn>
+     </mtd>
+    </mtr>
+   </mtable><mo form='postfix' fence='true' stretchy='true' symmetric='true' lspace='thinmathspace'>]</mo>
+  </mrow>
+ </mrow></math></div>
+
+<div class="standard" id='magicparlabel-9681'>One important feature of the 4-vector notation to be mentioned is that the product of a contravariant and a covariant tensor <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msup>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+   <msub>
+    <mrow><mi>X</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub>
+  </mrow>
+ </mrow></math> is invariant under Lorentz transformation.</div>
+
+<div class="standard" id='magicparlabel-9682'>It is easy to show that the Maxwell equation is the Euler-Lagrange equation of the Lagrangian <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <mrow><mi>L</mi>
+   </mrow><mo>=</mo>
+   <msub>
+    <mrow>
+     <mrow><mi>L</mi>
+     </mrow>
+    </mrow>
+    <mrow>
+     <mrow><mi>f</mi><mi>i</mi><mi>e</mi><mi>l</mi><mi>d</mi>
+     </mrow>
+    </mrow>
+   </msub><mo>+</mo>
+   <msub>
+    <mrow>
+     <mrow><mi>L</mi>
+     </mrow>
+    </mrow>
+    <mrow>
+     <mrow><mi>i</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi>
+     </mrow>
+    </mrow>
+   </msub><mo>=</mo><mo>-</mo>
+   <mfrac>
+    <mrow><mn>1</mn>
+    </mrow>
+    <mrow>
+     <mrow><mn>4</mn>
+      <msub>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+       <mrow><mn>0</mn>
+       </mrow>
+      </msub>
+     </mrow>
+    </mrow>
+   </mfrac>
+   <msub>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msub>
+   <msup>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msup><mo>-</mo>
+   <msup>
+    <mrow><mi>J</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msup>
+   <msub>
+    <mrow><mi>A</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mn>.</mn>
+  </mrow>
+ </mrow></math></div>
+<h3 class="subsection_" id='magicparlabel-9683'>Gauge theories and symmetries</h3>
+<div class="standard" id='magicparlabel-9684'>Noether's theorem states that for every differentiable global symmetry of the action of a Lagrangian system there is a corresponding conservation law. For instance time translations give conversation of energy and spatial translations yield conservation of enery. If we have for example a a complex-valued scalar field <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &phi; </mi>
+ </mrow></math> being invariant under some <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi>U</mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mn>1</mn>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math> transformation, <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi> &phi; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mo> &rarr; </mo>
+   <msup>
+    <mrow><mi>e</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi>i</mi><mi> &alpha; </mi>
+     </mrow>
+    </mrow>
+   </msup><mi> &phi; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math> where <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &alpha; </mi>
+ </mrow></math> does not depend on position <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi>x</mi>
+ </mrow></math> one can construct an according conserved Noether current. If however we have a position-dependent <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math> and the Lagrangain involves derivatives we obtain unwanted term destroying the invariance, because at each point we have different transformation roles. In order to have obtain local symmetry we tweak the partial derivative introducing a new gauge potential <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msub>
+   <mrow><mi>A</mi>
+   </mrow>
+   <mrow><mi> &mu; </mi>
+   </mrow>
+  </msub>
+ </mrow></math>: The covariant devirative <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msub>
+    <mrow><mi>D</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mo>=</mo>
+   <msub>
+    <mrow><mi> &part; </mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mo>-</mo><mi>i</mi><mi>g</mi>
+   <msub>
+    <mrow><mi>A</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub>
+  </mrow>
+ </mrow></math>
+<br />
+
+eliminates the terms indroduced by the partial derivative, argueing as follows. We assume that<math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msub>
+   <mrow><mi>A</mi>
+   </mrow>
+   <mrow><mi> &mu; </mi>
+   </mrow>
+  </msub>
+ </mrow></math> transforms as <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <msub>
+    <mrow><mi>A</mi>
+    </mrow>
+    <mrow><mi> &mu; </mi>
+    </mrow>
+   </msub><mo> &rarr; </mo><mi>A</mi><mi> &mu; </mi><mo>+</mo><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+   <mrow><mn>1</mn><mo>/</mo><mi>g</mi>
+   </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mi> &part; </mi><mi> &mu; </mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math>. By comparing to the the gauge discussed for the electromegnetic field, <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi>V</mi><mo> &rarr; </mo><mi>V</mi><mo>-</mo><mi> &part; </mi><mi> &lambda; </mi><mo>/</mo><mi> &part; </mi><mi>t</mi>
+  </mrow>
+ </mrow></math> and 
+<span style = "text-align: center;"><img src="lyxpreviewTT26911.png" alt="Mathematical Equation" />
+</span>
+) , we see that <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &lambda; </mi>
+ </mrow></math> is equivalent to <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mo>/</mo><mi>g</mi>
+  </mrow>
+ </mrow></math> with <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi>g</mi>
+ </mrow></math> being the coupling constant (being <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi>e</mi>
+ </mrow></math> in the case of electrodynamics). Using some algebra we see that the covariant derivative applied to the phase transformed field together with the gauge transformation gives us an expression in which the covariant derivative itself remains does not depend on the phase:<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mtable>
+  <mtr>
+   <mtd>
+    <msub>
+     <mrow><mi>D</mi>
+     </mrow>
+     <mrow><mi> &mu; </mi>
+     </mrow>
+    </msub>
+   </mtd>
+   <mtd><mo> &rarr; </mo>
+   </mtd>
+   <mtd>
+    <mrow><mo form='prefix' fence='true' stretchy='true' symmetric='true'>[</mo>
+
+     <mrow>
+      <msub>
+       <mrow><mi> &part; </mi>
+       </mrow>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+      </msub><mo>+</mo><mi>i</mi><mi>g</mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+      <mrow>
+       <msub>
+        <mrow><mi>A</mi>
+        </mrow>
+        <mrow><mi> &mu; </mi>
+        </mrow>
+       </msub><mo>-</mo>
+       <mfrac>
+        <mrow><mn>1</mn>
+        </mrow>
+        <mrow><mi>g</mi>
+        </mrow>
+       </mfrac>
+       <msub>
+        <mrow><mi> &part; </mi>
+        </mrow>
+        <mrow><mi> &mu; </mi>
+        </mrow>
+       </msub><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+      </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+     </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>]</mo>
+
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup><mi> &phi; </mi><mo>=</mo>
+    </mrow>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd><mrow/>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd>
+    <mrow>
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup>
+     <msub>
+      <mrow><mi> &part; </mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub><mi> &phi; </mi><mo>+</mo><mi>i</mi>
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup><mi> &phi; </mi>
+     <msub>
+      <mrow><mi> &part; </mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mo>+</mo><mi>i</mi><mi>g</mi>
+     <msub>
+      <mrow><mi>A</mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub>
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup><mi> &phi; </mi><mo>-</mo><mi>i</mi>
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup><mi> &phi; </mi>
+     <msub>
+      <mrow><mi> &part; </mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+    </mrow>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd><mrow/>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd>
+    <mrow>
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+     <mrow>
+      <msub>
+       <mrow><mi> &part; </mi>
+       </mrow>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+      </msub><mo>-</mo><mi>i</mi><mi>g</mi>
+      <msub>
+       <mrow><mi>A</mi>
+       </mrow>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+      </msub>
+     </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mi> &phi; </mi>
+    </mrow>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd><mrow/>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd>
+    <mrow>
+     <msup>
+      <mrow><mi>e</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+       </mrow>
+      </mrow>
+     </msup>
+     <msub>
+      <mrow><mi>D</mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub><mi> &phi; </mi>
+    </mrow>
+   </mtd>
+  </mtr>
+ </mtable></math></div>
+
+<div class="standard" id='magicparlabel-9685'>As the derivative <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msub>
+   <mrow><mi>D</mi>
+   </mrow>
+   <mrow><mi> &mu; </mi>
+   </mrow>
+  </msub>
+ </mrow></math> transforms the same way as the field <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &phi; </mi>
+ </mrow></math> it is the name &ldquo;covariant&rdquo; suits pretty well.</div>
+
+<div class="standard" id='magicparlabel-9686'>Using covariant derivatives we can thus construct meaningful Lagrangians preserving local symmetry. The simple real gauge theory is quantum electrodynamics (QED) augmenting electrodynamics by fermions (for instance electrons) described by Dirac spinors <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &psi; </mi>
+ </mrow></math>:<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mtable>
+  <mtr>
+   <mtd>
+    <mrow><mi>L</mi>
+    </mrow>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd>
+    <mrow>
+     <msub>
+      <mrow>
+       <mrow><mi>L</mi>
+       </mrow>
+      </mrow>
+      <mrow>
+       <mrow><mi>D</mi><mi>i</mi><mi>r</mi><mi>a</mi><mi>c</mi>
+       </mrow>
+      </mrow>
+     </msub><mo>+</mo>
+     <msub>
+      <mrow>
+       <mrow><mi>L</mi>
+       </mrow>
+      </mrow>
+      <mrow>
+       <mrow><mi>M</mi><mi>a</mi><mi>x</mi><mi>w</mi><mi>e</mi><mi>l</mi><mi>l</mi>
+       </mrow>
+      </mrow>
+     </msub><mo>+</mo>
+     <msub>
+      <mrow>
+       <mrow><mi>L</mi>
+       </mrow>
+      </mrow>
+      <mrow>
+       <mrow><mi>i</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi>
+       </mrow>
+      </mrow>
+     </msub>
+    </mrow>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd><mrow/>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd>
+    <mrow>
+     <mover>
+      <mrow><mi> &psi; </mi>
+      </mrow><mo stretchy="true">&OverBar;</mo>
+     </mover><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+     <mrow><mi>i</mi>
+      <msup>
+       <mrow><mi> &gamma; </mi>
+       </mrow>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+      </msup><mi> &part; </mi><mi> &mu; </mi><mo>-</mo><mi>m</mi>
+     </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mi> &psi; </mi><mo>-</mo>
+     <mfrac>
+      <mrow><mn>1</mn>
+      </mrow>
+      <mrow><mn>4</mn>
+      </mrow>
+     </mfrac>
+     <msub>
+      <mrow><mi>F</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi> &mu; </mi><mi> &nu; </mi>
+       </mrow>
+      </mrow>
+     </msub>
+     <msup>
+      <mrow><mi>F</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi> &mu; </mi><mi> &nu; </mi>
+       </mrow>
+      </mrow>
+     </msup><mo>-</mo><mi>e</mi>
+     <mover>
+      <mrow><mi> &psi; </mi>
+      </mrow><mo stretchy="true">&OverBar;</mo>
+     </mover>
+     <msup>
+      <mrow><mi> &gamma; </mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msup><mi> &psi; </mi>
+     <msub>
+      <mrow><mi>A</mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub>
+    </mrow>
+   </mtd>
+  </mtr>
+ </mtable></math>
+<br />
+
+Using the covariant derivative the Lagrangian reads<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow>
+   <mrow><mi>L</mi>
+   </mrow><mo>=</mo>
+   <mover>
+    <mrow><mi> &psi; </mi>
+    </mrow><mo stretchy="true">&OverBar;</mo>
+   </mover><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+   <mrow><mi>i</mi>
+    <msup>
+     <mrow><mi> &gamma; </mi>
+     </mrow>
+     <mrow><mi> &mu; </mi>
+     </mrow>
+    </msup>
+    <msub>
+     <mrow><mi>D</mi>
+     </mrow>
+     <mrow><mi> &mu; </mi>
+     </mrow>
+    </msub><mo>-</mo><mi>m</mi>
+   </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mi> &psi; </mi><mo>-</mo>
+   <mfrac>
+    <mrow><mn>1</mn>
+    </mrow>
+    <mrow><mn>4</mn>
+    </mrow>
+   </mfrac>
+   <msub>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msub>
+   <msup>
+    <mrow><mi>F</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi> &mu; </mi><mi> &nu; </mi>
+     </mrow>
+    </mrow>
+   </msup>
+  </mrow>
+ </mrow></math>and one obtains as the equation of motions for the fermionic wave function <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow><mi> &psi; </mi>
+ </mrow></math> and the electromagnetic potential <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <msub>
+   <mrow><mi>A</mi>
+   </mrow>
+   <mrow><mi> &mu; </mi>
+   </mrow>
+  </msub>
+ </mrow></math><math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+ <mtable>
+  <mtr>
+   <mtd>
+    <mrow><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+     <mrow><mi>i</mi>
+      <msup>
+       <mrow><mi> &gamma; </mi>
+       </mrow>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+      </msup>
+      <msub>
+       <mrow><mi>D</mi>
+       </mrow>
+       <mrow><mi> &mu; </mi>
+       </mrow>
+      </msub><mo>-</mo><mi>m</mi>
+     </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mi> &psi; </mi>
+    </mrow>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd><mn>0</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mrow>
+     <msub>
+      <mrow><mi> &part; </mi>
+      </mrow>
+      <mrow><mi> &mu; </mi>
+      </mrow>
+     </msub>
+     <msup>
+      <mrow><mi>F</mi>
+      </mrow>
+      <mrow>
+       <mrow><mi> &mu; </mi><mi> &nu; </mi>
+       </mrow>
+      </mrow>
+     </msup>
+    </mrow>
+   </mtd>
+   <mtd><mo>=</mo>
+   </mtd>
+   <mtd>
+    <mrow><mi>e</mi>
+     <mover>
+      <mrow><mi> &psi; </mi>
+      </mrow><mo stretchy="true">&OverBar;</mo>
+     </mover>
+     <msup>
+      <mrow><mi> &gamma; </mi>
+      </mrow>
+      <mrow><mi> &nu; </mi>
+      </mrow>
+     </msup><mi> &psi; </mi>
+    </mrow>
+   </mtd>
+  </mtr>
+ </mtable></math></div>
+
+<div class="standard" id='magicparlabel-9687'>The symmetry group of QED is <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi>U</mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mn>1</mn>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math>, that is the Lagrangian is invariant under <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi> &psi; </mi><mo> &rarr; </mo>
+   <msup>
+    <mrow><mi>e</mi>
+    </mrow>
+    <mrow>
+     <mrow><mi>i</mi><mi> &alpha; </mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mi>x</mi>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+     </mrow>
+    </mrow>
+   </msup><mi> &psi; </mi>
+  </mrow>
+ </mrow></math> and the according gauge field is the electromagnetic potential.</div>
+
+<div class="standard" id='magicparlabel-9688'><math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi>U</mi><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+<mn>1</mn>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+
+  </mrow>
+ </mrow></math> is a simple non-trivial symetry group and we now turn to the case to more involved case that the groups in question are non-abelian. Yang and Mills therefore considered transformations of the form <math xmlns="http://www.w3.org/1998/Math/MathML">
+ <mrow>
+  <mrow><mi> &phi; </mi><mo> &rarr; </mo><mo> exp </mo><mo form='prefix' fence='true' stretchy='true' symmetric='true'>(</mo>
+
+   <mrow><mi>i</mi>
+    <msup>
+     <mrow><mi> &alpha; </mi>
+     </mrow>
+     <mrow><mi>a</mi>
+     </mrow>
+    </msup>
+    <msup>
+     <mrow><mi>t</mi>
+     </mrow>
+     <mrow><mi>a</mi>
+     </mrow>
+    </msup>
+   </mrow>
+<mo form='postfix' fence='true' stretchy='true' symmetric='true'>)</mo>
+<mi> &phi; </mi>
+  </mrow>
+ </mrow></math> where ...</div>
+<h3 class="subsection_" id='magicparlabel-9689'>Quantum chromodynamics</h3>
+</body>
+</html>

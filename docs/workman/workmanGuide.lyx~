@@ -1,0 +1,680 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+
+
+\usepackage{physics}
+\usepackage{latexsym} 
+\usepackage{ mathrsfs }
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 0
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 0
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Quantum chromodynamics on your smartphone using 'SeekYouToo' : A workman
+ guide
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Abstract
+\series default
+.
+ Monte Carlo studies of non-ablian gauge theories emerged in the early eighties
+ now establishing a standard tool of modern lattice quantum field theory.
+ Due to the dramatic increase of mobile computational power in the 2010s
+ it is now possible to carry out very basic simulations on smart phones.
+ The author describes an according cross-platform implementation of 
+\begin_inset Formula $SU_{2}$
+\end_inset
+
+ gluon dynamics and discusses some ditactical aspects.
+\end_layout
+
+\begin_layout Section*
+A basic scetch of quantum chromodynamics
+\end_layout
+
+\begin_layout Subsection*
+Electrodynamics by concepts
+\end_layout
+
+\begin_layout Standard
+Quantum chromodynamics (QCD) describes the strong interaction of quarks
+ and gluons.
+ Quarks make up hardons such as the protons and neutron forming themeselves
+ the nuclei of atoms.
+ Gluons glue together the quarks implementing the strong force.
+ Quarks have spin 1/2 and thus are fermions (i.e.
+ particles with half odd integer spin) in constrast to gluon carrying spin
+ 1 and being bosons (particles with integer spin).
+ Spin plays an esential statistical role : Fermions obey the Pauli exclusion
+ principle stating that two identical fermions cannot occupy the same quantum
+ state simultaneously.
+ Thus electrons live in distinct shells around the nuclei of atoms.
+ Gluons play the same role as photons, being the carriers of electromagnetic
+ force, yet gluons can also interact with themselves.
+\end_layout
+
+\begin_layout Standard
+Electrodynamics describes the electromagnetics fields.
+ Historically Gauss, Ampere and Faraday formulated distinct equations for
+ the electric and magntics fields, 
+\begin_inset Formula $\mathbf{E}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The magnetic field has no monopoles and thus divergenceless as expressed
+ in Gauss's law 
+\begin_inset Formula $\divergence{\vb{B}}=0$
+\end_inset
+
+ of the magntic field.
+ As the divergence of a curl always vanishes the magnetic field can be written
+ as the curl of its potential 
+\begin_inset Formula $\vb{B}=\curl{\vb{A}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Faradays law states a changing magnetic fileld induces a voltage in a coil.
+ That is the path integral of the electric field around a closed loop equal
+ to the negative rate if the change of the magnetic flux through the area
+ enclosed by the loop: 
+\begin_inset Formula $\oint_{C}\vb{E}\cdot d\vb{r}=-\partial\vb{B}/\partial t$
+\end_inset
+
+.
+ Put in vector notation we have 
+\begin_inset Formula $\curl{\vb{E}}=-\partial\vb{B}/\partial t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Using the magnetic potential 
+\begin_inset Formula $\vb{A}$
+\end_inset
+
+ we have 
+\begin_inset Formula $\curl{(\vb{E}+\partial\vb{A}/\partial t)}=0$
+\end_inset
+
+.
+ When the curl of a vector field vanishes the field can always be written
+ as the gradient of a scalar, giving 
+\begin_inset Formula $\vb{E}=-\grad{V}-\partial\vb{A}/\partial t$
+\end_inset
+
+ with 
+\begin_inset Formula $V$
+\end_inset
+
+ being the electric potential.
+\end_layout
+
+\begin_layout Standard
+As the electric and magnetic field only depends on the changes of the accordings
+ potentials we assume it is possible that we can change the potentials and
+ obtains the same fields.
+ If we make the transformation 
+\begin_inset Formula $\vb{A}\rightarrow\vb{A}+\grad{\lambda}$
+\end_inset
+
+ the magnetic field 
+\begin_inset Formula $\vb{B}$
+\end_inset
+
+ does not change since the curl of a gradient vanishes, 
+\begin_inset Formula $\vb{B}=\curl{\vb{A+\grad{\lambda}}}=\curl{\vb{A}}$
+\end_inset
+
+.
+ However the electric field is changed, 
+\begin_inset Formula $\vb{E}=-\grad{V}-\partial\vb{A}/\partial t-\grad{\partial\lambda/\partial t}$
+\end_inset
+
+ 
+\begin_inset Formula $=-\grad{(V+\partial\lambda/\partial t)}-\partial\vb{A}/\partial t$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+If another change 
+\begin_inset Formula $V\rightarrow V-\partial\lambda/\partial t$
+\end_inset
+
+ is made also 
+\begin_inset Formula $\vb{E}$
+\end_inset
+
+ remains unchanged.
+ A partial choice of the potentials is called a gauge and can be done in
+ many ways.
+\end_layout
+
+\begin_layout Standard
+Gauss's law for the electric field 
+\begin_inset Formula $\divergence{\vb{E}}=\rho/\epsilon_{0},$
+\end_inset
+
+and Ampere's law 
+\begin_inset Formula $\curl{\vb{B}}=\mu_{0}\vb{J}+\mu_{0}\epsilon_{0}\partial\vb{E}/\partial t$
+\end_inset
+
+ have not been mentioned yet completing the set of the of the 
+\begin_inset Quotes eld
+\end_inset
+
+four macroscopic Maxwell equations
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Using an appropriate gauge condition, the Lorenz 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+(Ludvig)
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ gauge 
+\begin_inset Formula $\divergence{A}+\mu_{0}\epsilon_{0}(\partial V/\partial t)=0$
+\end_inset
+
+ lets one write the inhomogeneous Maxwell equations in a consise fashion
+\begin_inset Formula 
+\begin{eqnarray*}
+\Box^{2}V & = & \mu_{0}\epsilon_{0}\frac{\partial V}{\partial t}-\nabla²V=\frac{\rho}{\epsilon_{0}}\\
+\Box^{2}\vb{A} & = & \mu_{0}\epsilon_{0}\frac{\partial\vb{A}}{\partial t}-\nabla^{2}\vb{A}=\mu_{0}\vb{J}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Though the electric potential relates to static charges and the magnetic
+ one to moving charges the expressional symmetry of this appealing formulation
+ suggests that the distinction between electric and magnetic fields are
+ a question about point of view and that the electric and magnetic fields
+ form one field, the electromagnetic field.
+\end_layout
+
+\begin_layout Standard
+Maxwell carried out a relativistic formulation taking into account Lorentz
+ (Hendrik) transformations.
+ That is, he analysed how the fields transform when changing from a coordinate
+ frame in Minkoskian spacetime to some other frame beeing boosted at constant
+ velocity relative to the original frame.
+ These transformation can be represented by 4x4 real matrices 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ (parametrized by the velocity 
+\begin_inset Formula $v$
+\end_inset
+
+) such that a transformed spacetime-vector has the same scalar (using the
+ Minkowski metric) as the original vector.
+ The transfomation of the electric and magnetic field can be written in
+ a concise form letting the Lorentz group matrices 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ act on the electromagnetic field tensor
+\begin_inset Formula 
+\[
+F_{\mu\nu}=\left[\begin{array}{cccc}
+0 & -E_{x}/c & -E_{y}/c & -E_{z}/c\\
+E_{x}/c & 0 & -B_{z} & B_{y}\\
+E_{y}/c & B_{z} & 0 & -B_{x}\\
+E_{z}/c & -B_{y} & B_{x} & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the four-vector potential given by 
+\begin_inset Formula $A_{\mu}=(V/c,A_{x},A_{y},A_{z})$
+\end_inset
+
+ and the four-current defined as 
+\begin_inset Formula $J^{\nu}=(c\rho,J_{x},J_{y},J_{z})$
+\end_inset
+
+ the inhomogeneous Maxwell equation can written in the very compact form
+\begin_inset Formula 
+\[
+\partial_{\mu}F^{\mu\nu}=\mu_{0}J^{\nu}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F^{\mu\nu}=\partial^{\mu}A^{\nu}-\partial^{\nu}A^{\mu}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that in the 4-notaion greek indices run from 0 to 3 and the Einstein
+ summation convention is applied when an index is repeated both lowered
+ and raised, that is for two 4-vectors 
+\begin_inset Formula $X^{\mu}$
+\end_inset
+
+and 
+\begin_inset Formula $Y_{\mu}$
+\end_inset
+
+ the expression 
+\begin_inset Formula $X^{\mu}Y_{\mu}$
+\end_inset
+
+ means 
+\begin_inset Formula $X^{\mu}Y_{\mu}=\sum_{\mu=0}^{3}X^{\mu}Y_{\mu}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Also note that a second order tensor (a matrix) 
+\begin_inset Formula $X_{\mu\nu}$
+\end_inset
+
+ with only lowered indices is called covariant and that according contravariant
+ tensor (raised indices) is build by applying the metric tensor 
+\begin_inset Formula $\eta$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+X^{\mu\nu}=\eta^{\mu\alpha}\eta^{\nu\beta}X_{\alpha\beta};\quad\eta^{\mu\nu}=\left[\begin{array}{cccc}
+-1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One important feature of the 4-vector notation to be mentioned is that the
+ product of a contravariant and a covariant tensor 
+\begin_inset Formula $X^{\mu}X_{\mu}$
+\end_inset
+
+ is invariant under Lorentz transformation.
+\end_layout
+
+\begin_layout Standard
+It is easy to show that the Maxwell equation is the Euler-Lagrange equation
+ of the Lagrangian 
+\begin_inset Formula 
+\[
+{L}=\mathscr{{L}}_{field}+\mathscr{{L}}_{interaction}=-\frac{1}{4\mu_{0}}F_{\mu\nu}F^{\mu\nu}-J^{\mu}A_{\mu}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Gauge theories and symmetries
+\end_layout
+
+\begin_layout Standard
+Noether's theorem states that for every differentiable global symmetry of
+ the action of a Lagrangian system there is a corresponding conservation
+ law.
+ For instance time translations give conversation of energy and spatial
+ translations yield conservation of enery.
+ If we have for example a a complex-valued scalar field 
+\begin_inset Formula $\phi$
+\end_inset
+
+ being invariant under some 
+\begin_inset Formula $U(1)$
+\end_inset
+
+ transformation, 
+\begin_inset Formula $\phi(x)\rightarrow e^{i\alpha}\phi(x)$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ does not depend on position 
+\begin_inset Formula $x$
+\end_inset
+
+ one can construct an according conserved Noether current.
+ If however we have a position-dependent 
+\begin_inset Formula $\alpha(x)$
+\end_inset
+
+ and the Lagrangain involves derivatives we obtain unwanted term destroying
+ the invariance, because at each point we have different transformation
+ roles.
+ In order to have obtain local symmetry we tweak the partial derivative
+ introducing a new gauge potential 
+\begin_inset Formula $A_{\mu}$
+\end_inset
+
+: The covariant devirative 
+\begin_inset Formula 
+\[
+D_{\mu}=\partial_{\mu}-igA_{\mu}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+eliminates the terms indroduced by the partial derivative, argueing as follows.
+ We assume that
+\begin_inset Formula $A_{\mu}$
+\end_inset
+
+ transforms as 
+\begin_inset Formula $A_{\mu}\rightarrow A\mu+(1/g)\partial\mu\alpha(x)$
+\end_inset
+
+.
+ By comparing to the the gauge discussed for the electromegnetic field,
+ 
+\begin_inset Formula $V\rightarrow V-\partial\lambda/\partial t$
+\end_inset
+
+ and 
+\begin_inset Formula $\vb{A}\rightarrow\vb{A}+\grad{\lambda}$
+\end_inset
+
+) , we see that 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is equivalent to 
+\begin_inset Formula $\alpha(x)/g$
+\end_inset
+
+ with 
+\begin_inset Formula $g$
+\end_inset
+
+ being the coupling constant (being 
+\begin_inset Formula $e$
+\end_inset
+
+ in the case of electrodynamics).
+ Using some algebra we see that the covariant derivative applied to the
+ phase transformed field together with the gauge transformation gives us
+ an expression in which the covariant derivative itself remains does not
+ depend on the phase:
+\begin_inset Formula 
+\begin{eqnarray*}
+D_{\mu} & \rightarrow & \left[\partial_{\mu}+ig\left(A_{\mu}-\frac{1}{g}\partial_{\mu}\alpha(x)\right)\right]e^{i\alpha(x)}\phi=\\
+ & = & e^{i\alpha(x)}\partial_{\mu}\phi\\
+ &  & +ie^{i\alpha(x)}\phi\partial_{\mu}\alpha(x)+igA_{\mu}e^{i\alpha(x)}\phi\\
+ &  & -ie^{i\alpha(x)}\phi\partial_{\mu}\alpha(x)\\
+ & = & e^{i\alpha(x)}\left(\partial_{\mu}-igA_{\mu}\right)\phi\\
+ & = & e^{i\alpha(x)}D_{\mu}\phi
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As the derivative 
+\begin_inset Formula $D_{\mu}$
+\end_inset
+
+ transforms the same way as the field 
+\begin_inset Formula $\phi$
+\end_inset
+
+ it is the name 
+\begin_inset Quotes eld
+\end_inset
+
+covariant
+\begin_inset Quotes erd
+\end_inset
+
+ suits pretty well.
+\end_layout
+
+\begin_layout Standard
+Using covariant derivatives we can thus construct meaningful Lagrangians
+ preserving local symmetry.
+ The simple real gauge theory is quantum electrodynamics (QED) augmenting
+ electrodynamics by fermions (for instance electrons) described by Dirac
+ spinors 
+\begin_inset Formula $\psi$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathscr{{L}} & = & \mathscr{{L}}_{Dirac}+\mathscr{{L}}_{Maxwell}+\mathscr{{L}}_{interaction}\\
+ & = & \bar{\psi}\left(i\gamma^{\mu}\partial\mu-m\right)\psi-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}-e\bar{\psi}\gamma^{\mu}\psi A_{\mu}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Using the covariant derivative the Lagrangian reads
+\begin_inset Formula 
+\[
+\mathscr{{L}}=\bar{\psi}\left(i\gamma^{\mu}D_{\mu}-m\right)\psi-\frac{1}{4}F_{\mu\nu}F^{\mu\nu}
+\]
+
+\end_inset
+
+and one obtains as the equation of motions for the fermionic wave function
+ 
+\begin_inset Formula $\psi$
+\end_inset
+
+ and the electromagnetic potential 
+\begin_inset Formula $A_{\mu}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\left(i\gamma^{\mu}D_{\mu}-m\right)\psi & = & 0\\
+\partial_{\mu}F^{\mu\nu} & = & e\bar{\psi}\gamma^{\nu}\psi
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The symmetry group of QED is 
+\begin_inset Formula $U(1)$
+\end_inset
+
+, that is the Lagrangian is invariant under 
+\begin_inset Formula $\psi\rightarrow e^{i\alpha(x)}\psi$
+\end_inset
+
+ and the according gauge field is the electromagnetic potential.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $U(1)$
+\end_inset
+
+ is a simple non-trivial symetry group and we now turn to the case to more
+ involved case that the groups in question are non-abelian.
+ Yang and Mills therefore considered transformations of the form 
+\begin_inset Formula $\phi\rightarrow\exp\left(i\alpha^{a}t^{a}\right)\phi$
+\end_inset
+
+ where ...
+\end_layout
+
+\begin_layout Subsection*
+Quantum chromodynamics
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\alpha^{2}+\beta^{2}=\frac{1}{\sqrt{\left(2\right)}}\begin{array}{cccc}
+\\
+\\
+\\
+\\
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
