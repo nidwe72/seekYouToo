@@ -2,7 +2,8 @@
 
 SimulationExecutionPlanWidget::SimulationExecutionPlanWidget(QWidget *parent) : DefaultPanel(parent)
 {
-    this->setFixedHeight(128);
+    //this->setFixedHeight(128);
+    this->setFixedHeight(200);
     //this->setStyleSheet("SimulationExecutionPlanWidget {background-color : #001a00; color : #76EE00; border-width: 2px; border-style: solid;border-color: black;}");
 
 }
@@ -19,7 +20,8 @@ void SimulationExecutionPlanWidget::setExecutionPlan(SimulationExecutionPlan *ex
 
 void SimulationExecutionPlanWidget::update(SimulationExecutionPlanEntry *simulationExecutionPlanEntry)
 {
-    this->betaLcdNumber->display(simulationExecutionPlanEntry->getBeta());
+    double beta=simulationExecutionPlanEntry->getBeta();
+    this->betaLcdNumber->display(beta);
 
     QCategoryAxis *yAxis = this->getYAxis();
 
@@ -30,6 +32,44 @@ void SimulationExecutionPlanWidget::update(SimulationExecutionPlanEntry *simulat
     for (int i=executionPlanRange->first;i<=executionPlanRange->second;i++) {
         yAxis->append(QString::number(i),i);
     }
+
+    QChart* chart=this->getChartView()->chart();
+
+
+    if(chart->series().empty()){
+
+        QBarSeries* series=new QBarSeries();
+        QBarSet* barSet=new QBarSet("");
+
+        for (SimulationExecutionPlanEntry* executionPlanEntry :*executionPlan->getEntries()) {
+            barSet->append(executionPlanEntry->getBeta());
+        }
+
+        series->append(barSet);
+        chart->addSeries(series);
+        chart->legend()->hide();
+    }
+
+
+    QList<QGraphicsRectItem *> rect_items;
+    for(QGraphicsItem * it : this->getChartView()->items()){
+        if(QGraphicsRectItem *rect = qgraphicsitem_cast<QGraphicsRectItem *>(it)){
+            if(rect->parentItem() != chart && rect->parentItem()->parentItem() == chart){
+                rect_items << rect;
+            }
+        }
+    }
+
+    int executionPlanEntryIndex=SimulationExecutionPlanUtil::getExecutionPlanEntryIndex(executionPlan,simulationExecutionPlanEntry);
+
+    for(QGraphicsRectItem * rect : rect_items){
+        rect->setBrush(QColor(QString("#009933")));
+    }
+
+    int rectIndexSelected=+executionPlan->getEntries()->size()-executionPlanEntryIndex-1;
+    rect_items.at(rectIndexSelected)->setBrush(QColor(QString("#76EE00")));
+
+
 
 }
 
@@ -106,6 +146,10 @@ QChartView *SimulationExecutionPlanWidget::getChartView()
 
         this->chartView->setRenderHint(QPainter::Antialiasing);
         this->chartView->setStyleSheet("QChartView { background-color : #ff0000; color : #76EE00; }");
+
+
+
+
     }
 
     return this->chartView;

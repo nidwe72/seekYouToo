@@ -19,7 +19,8 @@ void SU3Simulation::start()
     {
         double beta=executionPlanEntry->getBeta();
         int nth = executionPlanEntry->totalCyclesCount;
-        int lsz = 8; // Lattice size
+
+        int lsz = 12; // Lattice size
 
         SimulationProgressSignal* simulationProgressSignalBeta=new SimulationProgressSignal();
         simulationProgressSignalBeta->setType(SimulationProgressSignal::Type::Beta);

@@ -12,6 +12,7 @@ class SimulationExecutionPlanUtil
 public:    
     static SimulationExecutionPlan* createFastExecutionPlan();
     static QPair<int,int>* getExecutionPlanRange(SimulationExecutionPlan* simulationExecutionPlan);
+    static int getExecutionPlanEntryIndex(SimulationExecutionPlan* simulationExecutionPlan,SimulationExecutionPlanEntry* simulationExecutionPlanEntry);
 
 private:
     SimulationExecutionPlanUtil();

@@ -23,6 +23,9 @@
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
 
+#include <QBarSeries>
+#include <QBarSet>
+
 using namespace QtCharts;
 
 class SimulationExecutionPlanWidget : public DefaultPanel
