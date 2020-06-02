@@ -3,6 +3,8 @@
 
 #include "mainwindow.h"
 
+#include "DocumentationWidget.h"
+
 using namespace QtCharts;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -49,30 +51,6 @@ MainWindow::MainWindow(QWidget *parent)
     QTabWidget* mainWidget=new QTabWidget();
     mainWidget->setStyleSheet("QTabWidget { background-color : #001a00; color : #76EE00; }");
 
-//    QWebEngineView* buzz=this->test();
-//    mainWidget->addTab(buzz,QString("Documentation"));
-
-    //mainWidget->addTab(this->testWeb(),QString("Documentation"));
-
-
-    /*
-    QWidget* browserWidget=new QWidget();    
-    browserWidget->setStyleSheet("QWidget { background-color : #001a00; color : #76EE00; }");
-    QGridLayout* bwl=new QGridLayout();
-    bwl->setContentsMargins(0,0,0,0);
-    browserWidget->setLayout(bwl);
-    bwl->addWidget(QWidget::createWindowContainer(this->testWeb(),this),0,0);
-    */
-
-
-
-
-
-
-    //mainWidget->addTab(browserWidget,QString("Documentation"));
-
-    mainWidget->addTab(QWidget::createWindowContainer(this->testWeb(),this),QString("Documentation"));
-
 
 
 
@@ -103,6 +81,12 @@ MainWindow::MainWindow(QWidget *parent)
         &SimulationWidget::handleSimulationMeasurementSignal,Qt::QueuedConnection);
 
     QObject::connect(this,&MainWindow::signal_stopSimulation,su3Simulation,&SU3Simulation::stop);
+
+    DocumentationWidget* documentationWidget=new DocumentationWidget(window);
+    mainWidget->addTab(documentationWidget,QString("Documentation"));
+
+    mainWidget->setCurrentIndex(2);
+
 
 
 
@@ -385,37 +369,5 @@ for (i = 0; i < acc.length; i++) {
 
 }
 
-QQuickView *MainWindow::testWeb()
-{
-    QQuickView* result=new QQuickView();
-    result->setVisible(true);
-    result->setSource(QUrl("qrc:docs/docs/browserWidget.qml"));
-    result->setProperty("foo",QString("http://www.google.com"));
-
-    QQmlContext *localRootContext = result->rootContext();
-    localRootContext->setContextProperty(QStringLiteral("url"),QStringLiteral("http://www.google.com"));
-
-
-//    QQmlProperty foo(localRootContext,"url");
-//    QVariant localRead = foo.read();
-//    foo.write(QVariant::fromValue(QString("http://google.com")));
-
-    //result->setProperty("url",QString("http://google.com"));
-
-
-
-    QString msg = "http://edwin-roth.at/downloads/seekYouToo/docs/workman/workmanGuide.html";
-
-    QMetaObject::invokeMethod(result->rootObject(), "setUrl",
-            //Q_RETURN_ARG(QString, returnedValue),
-            Q_ARG(QString, msg));
-
-
-    //result->setColor(QColor(255,0,0));
-
-
-    result->setResizeMode(QQuickView::SizeRootObjectToView);
-    return result;
-}
 
 

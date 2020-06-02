@@ -1,23 +1,32 @@
 #include "BrowserWidget.h"
 
-BrowserWidget::BrowserWidget(QWidget *parent) : QQuickWidget(parent)
+BrowserWidget::BrowserWidget(QWidget *parent) : QWidget(parent)
+{    
+    QGridLayout* layout=new QGridLayout();
+    layout->setContentsMargins(0,0,0,0);
+    this->setLayout(layout);
+    layout->addWidget(QWidget::createWindowContainer(this->getContainer(),this));
+}
+
+void BrowserWidget::loadUrl(QString url)
 {
-    this->init();
+    //QString msg = "http://edwin-roth.at/downloads/seekYouToo/docs/workman/workmanGuide.html";
+    QMetaObject::invokeMethod(this->getContainer()->rootObject(), "setUrl",
+            Q_ARG(QString, url));
 }
 
-void BrowserWidget::init()
-{           
-    //this->setSource(QUrl(QString(":/browserWidget/browserWidget.qml")));
-
-
-    this->setSource(QUrl(QString(":/docs/docs/browserWidget.qml")));
-
-
-
-    //QQuickItem *localRootObject = this->rootObject();
-    //QQmlProperty::write(localRootObject, QString("url"),QString("http://www.google.com"));
-    //QQmlProperty::write(localRootObject,QString("url"),QString("http://www.google.com"));
-
-
+QQuickView *BrowserWidget::getContainer()
+{
+    if(this->container==nullptr){
+        this->container=new QQuickView();
+        this->container->setVisible(true);
+        this->container->setSource(QUrl("qrc:docs/docs/browserWidget.qml"));
+        this->container->setProperty("foo",QString("http://www.google.com"));
+        this->container->setResizeMode(QQuickView::SizeRootObjectToView);
+    }
+    return this->container;
 
 }
+
+
+

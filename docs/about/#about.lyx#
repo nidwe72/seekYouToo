@@ -1,0 +1,190 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+
+
+\usepackage{physics}
+\usepackage{latexsym} 
+\usepackage{ mathrsfs }
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 0
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 0
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+About
+\end_layout
+
+\begin_layout Section*
+Version
+\end_layout
+
+\begin_layout Itemize
+SeekYouToo version 20200602
+\end_layout
+
+\begin_layout Itemize
+author: Edwin Roth
+\end_layout
+
+\begin_layout Section*
+License
+\end_layout
+
+\begin_layout Itemize
+This software is available under GNU LESSER GENERAL PUBLIC LICENSE Version
+ 3 (http://www.gnu.org/licenses/lgpl-3.0.html).
+\end_layout
+
+\begin_layout Itemize
+This software uses 
+\begin_inset Quotes eld
+\end_inset
+
+The Qt Toolkit is Copyright (C) 2018 The Qt Company Ltd.
+ and other contributors.
+\begin_inset Quotes erd
+\end_inset
+
+ under under GNU LESSER GENERAL PUBLIC LICENSE Version 3 (http://www.gnu.org/licen
+ses/lgpl-3.0.html).
+\end_layout
+
+\begin_layout Itemize
+The source code of this software is available on the following github project
+ page: https://github.com/nidwe72/seekYouToo
+\end_layout
+
+\begin_layout Subsection*
+Links
+\end_layout
+
+\begin_layout Itemize
+private homepage: http://edwin-roth.net
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+SeekYouToo: TODO
+\end_layout
+
+\begin_layout Itemize
+physics: TODO
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+github project page: https://github.com/nidwe72/seekYouToo
+\end_layout
+
+\begin_layout Itemize
+original paper this software is based on:
+\begin_inset Newline newline
+\end_inset
+
+M.
+ Creutz, "Monte Carlo study of quantized SU(2) gauge theory," Phys.
+ Rev.
+ D21, 2308-2315 (1980).
+ web: https://latticeguy.net/mypubs/pub037.pdf
+\end_layout
+
+\begin_layout Itemize
+Michael Creutz's homepage: https://latticeguy.net/
+\end_layout
+
+\begin_layout Itemize
+CERN's homepage: https://home.cern/
+\end_layout
+
+\begin_layout Itemize
+Brookhaven National Laboratory: https://www.bnl.gov/world/
+\end_layout
+
+\begin_layout Itemize
+homepage: physic insthttps://physik.uni-graz.at/de/
+\end_layout
+
+\begin_layout Itemize
+Quantum chromodynamics on the lattice; Christof Gattringer( Graz U.
+ ) , Christian B.
+ Lang( Graz U.
+ ) ISBN:9783642018497 (Print), 9783642018503 (eBook); https://www.springer.com/gp/
+book/9783642018497
+\end_layout
+
+\end_body
+\end_document

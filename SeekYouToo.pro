@@ -21,6 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     BrowserWidget.cpp \
     DefaultPanel.cpp \
+    DocumentationWidget.cpp \
     SimulationExecutionPlan.cpp \
     SimulationExecutionPlanEntry.cpp \
     SimulationExecutionPlanUtil.cpp \
@@ -53,6 +54,7 @@ SOURCES += \
 HEADERS += \
     BrowserWidget.h \
     DefaultPanel.h \
+    DocumentationWidget.h \
     SimulationExecutionPlan.h \
     SimulationExecutionPlanEntry.h \
     SimulationExecutionPlanUtil.h \

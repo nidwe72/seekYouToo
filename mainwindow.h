@@ -81,8 +81,6 @@ private:
     SimulationWidget* simulationWidget;
     QString getDoc1();
 
-    QQuickView* testWeb();
-
 
 
 };
