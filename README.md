@@ -1,2 +1,2 @@
 # seekYouToo
-quantum chromodynmic on your smart phone
+quantum chromodynamics on your smart phone
