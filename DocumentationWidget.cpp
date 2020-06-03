@@ -1,100 +1,59 @@
 #include "DocumentationWidget.h"
 
 
-DocumentationWidget::DocumentationWidget(QWidget *parent):QTabWidget(parent)
+DocumentationWidget::DocumentationWidget(QWidget *parent):QWidget(parent)
 {
-    this->setTabPosition(QTabWidget::South);
 
-    BrowserWidget* foo=new BrowserWidget();
-    this->addTab(foo,QString("Layman"));
-    QString url = "https://www.youtube.com/embed/x9r9fzIHpBs";
-    foo->loadUrl(url);
+    QGridLayout* layout=new QGridLayout();
+    layout->setContentsMargins(0,0,0,0);
+    this->setLayout(layout);
 
+    BrowserWidget *browserWidget = this->getBrowserWidget();
 
-    //QTimer::singleShot(3000,this,&DocumentationWidget::selectStartTabSlot);
+    layout->addWidget(browserWidget,0,0,1,3);
 
-//    QTimer *timer = new QTimer(this);
-//    connect(timer, &QTimer::timeout, this, &DocumentationWidget::selectStartTabSlot);
-//    timer->start(1000);
+    QPushButton* buttonDocWorkman= new QPushButton("Workman");
+    buttonDocWorkman->setObjectName(QString("Workman"));
+    layout->addWidget(buttonDocWorkman,1,0);
+
+    QPushButton* buttonDocLayman= new QPushButton("Layman");
+    buttonDocLayman->setObjectName(QString("Layman"));
+    layout->addWidget(buttonDocLayman,1,1);
+
+    QPushButton* buttonDocAbout= new QPushButton("About");
+    buttonDocAbout->setObjectName(QString("About"));
+    layout->addWidget(buttonDocAbout,1,2);
+
+    browserWidget->loadUrl(QString("https://www.youtube.com/embed/x9r9fzIHpBs"));
+
+    QObject::connect(buttonDocWorkman,&QPushButton::clicked,this,&DocumentationWidget::on_button_clicked);
+    QObject::connect(buttonDocLayman,&QPushButton::clicked,this,&DocumentationWidget::on_button_clicked);
+    QObject::connect(buttonDocAbout,&QPushButton::clicked,this,&DocumentationWidget::on_button_clicked);
 
 }
 
-void DocumentationWidget::selectStartTabSlot()
+BrowserWidget *DocumentationWidget::getBrowserWidget()
 {
-    this->addTab(QWidget::createWindowContainer(this->getWorkmanDocView(),this),QString("Workman"));
-    this->addTab(QWidget::createWindowContainer(this->getDocVideoView(),this),QString("Layman"));
-    this->addTab(QWidget::createWindowContainer(this->getAboutDocView(),this),QString("About"));
-
-    //this->setCurrentIndex(1);
+    if(this->browserWidget==nullptr){
+        this->browserWidget=new BrowserWidget();
+    }
+    return this->browserWidget;
 }
 
-QQuickView *DocumentationWidget::getDocVideoView()
+void DocumentationWidget::on_button_clicked()
 {
-    QQuickView* result=new QQuickView();
-    result->setVisible(true);
-    result->setSource(QUrl("qrc:docs/docs/browserWidget.qml"));
-    result->setProperty("foo",QString("http://www.google.com"));
+    BrowserWidget *browserWidget = this->getBrowserWidget();
 
-    QQmlContext *localRootContext = result->rootContext();
-    localRootContext->setContextProperty(QStringLiteral("url"),QStringLiteral("http://www.google.com"));
-
-    QString msg = "https://www.youtube.com/embed/x9r9fzIHpBs";
-//    QString msg = "https://www.youtube.com/embed/x9r9fzIHpBs?autoplay=1";
-
-    QMetaObject::invokeMethod(result->rootObject(), "setUrl",Q_ARG(QString, msg));
-
-    result->setResizeMode(QQuickView::SizeRootObjectToView);
-    return result;
+    QObject* sender=QObject::sender();
+    if(sender->objectName()==QString("Workman")){
+        browserWidget->loadUrl(QString("http://edwin-roth.at/downloads/seekYouToo/docs/workman/workmanGuide.html"));
+    } else if(sender->objectName()==QString("Layman")){
+        browserWidget->loadUrl(QString("https://www.youtube.com/embed/x9r9fzIHpBs"));
+    }else if(sender->objectName()==QString("About")){
+        browserWidget->loadUrl(QString("http://edwin-roth.at/downloads/seekYouToo/docs/about/about.html"));
+    }
 
 }
 
-QQuickView *DocumentationWidget::getWorkmanDocView()
-{
-    QQuickView* result=new QQuickView();
-    result->setVisible(true);
-    result->setSource(QUrl("qrc:docs/docs/browserWidget.qml"));
-    result->setProperty("foo",QString("http://www.google.com"));
-
-    QQmlContext *localRootContext = result->rootContext();
-    localRootContext->setContextProperty(QStringLiteral("url"),QStringLiteral("http://www.google.com"));
-
-//    QQmlProperty foo(localRootContext,"url");
-//    QVariant localRead = foo.read();
-//    foo.write(QVariant::fromValue(QString("http://google.com")));
-
-    //result->setProperty("url",QString("http://google.com"));
-
-    QString msg = "http://edwin-roth.at/downloads/seekYouToo/docs/workman/workmanGuide.html";
-    QMetaObject::invokeMethod(result->rootObject(), "setUrl",
-            Q_ARG(QString, msg));
-
-
-    result->setResizeMode(QQuickView::SizeRootObjectToView);
-    return result;
-}
-
-QQuickView *DocumentationWidget::getAboutDocView()
-{
-    QQuickView* result=new QQuickView();
-    result->setVisible(true);
-    result->setSource(QUrl("qrc:docs/docs/browserWidget.qml"));
-    result->setProperty("foo",QString("http://www.google.com"));
-
-    QQmlContext *localRootContext = result->rootContext();
-    localRootContext->setContextProperty(QStringLiteral("url"),QStringLiteral("http://www.google.com"));
-
-    QString msg = "http://edwin-roth.at/downloads/seekYouToo/docs/about/about.html";
-    QMetaObject::invokeMethod(result->rootObject(), "setUrl",
-            Q_ARG(QString, msg));
-
-
-    result->setResizeMode(QQuickView::SizeRootObjectToView);
-    return result;
-}
-
-void DocumentationWidget::selectStartTab()
-{
-    this->setCurrentIndex(0);
-}
 
 

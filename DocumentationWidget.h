@@ -5,6 +5,7 @@
 #include<QQuickView>
 #include <QQuickView>
 #include <QQmlContext>
+#include <QPushButton>
 #include <QTimer>
 
 #include "qquickitem.h"
@@ -12,23 +13,21 @@
 #include "BrowserWidget.h"
 
 
-class DocumentationWidget : public QTabWidget
+class DocumentationWidget : public QWidget
 {
     Q_OBJECT
 
 public:    
     explicit DocumentationWidget(QWidget *parent = 0);
+    BrowserWidget* getBrowserWidget();
 
 public slots:
-    void selectStartTabSlot();
+    void on_button_clicked();
 
 
 private:
-    QQuickView* getDocVideoView();
-    QQuickView *getWorkmanDocView();
-    QQuickView *getAboutDocView();
+    BrowserWidget* browserWidget=nullptr;
 
-    void selectStartTab();
 };
 
 #endif // DOCUMENTATIONWIDGET_H
