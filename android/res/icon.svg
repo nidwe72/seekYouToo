@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="72"
+   height="72"
+   viewBox="0 0 19.05 19.050001"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/home/nidwe/development/qt/seekYouToo/android/res/icon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.375"
+     inkscape:cx="32.483516"
+     inkscape:cy="36"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="997"
+     inkscape:window-x="1920"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-277.94998)">
+    <circle
+       style="opacity:1;fill:#009933;fill-opacity:1;stroke:none;stroke-width:5.56486559;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846"
+       cx="9.5249996"
+       cy="287.47498"
+       r="9.5249996" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.35737371px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#76ee00;fill-opacity:1;stroke:none;stroke-width:0.13393433"
+       x="12.414034"
+       y="293.40045"
+       id="text823"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan821"
+         x="12.414034"
+         y="293.40045"
+         style="fill:#76ee00;fill-opacity:1;stroke-width:0.13393433">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.89708042px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#76ee00;fill-opacity:1;stroke:none;stroke-width:0.22242701;"
+       x="2.2278209"
+       y="289.15421"
+       id="text819"><tspan
+         sodipodi:role="line"
+         id="tspan817"
+         x="2.2278209"
+         y="289.15421"
+         style="fill:#76ee00;stroke-width:0.22242701;fill-opacity:1;">SU</tspan></text>
+  </g>
+</svg>

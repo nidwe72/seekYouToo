@@ -94,3 +94,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     doc.qrc \
     resources/browserWidget.qrc
+
+android {
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+    DISTFILES += \
+        android/AndroidManifest.xml \
+        android/build.gradle \
+        android/res/values/libs.xml
+}
+
