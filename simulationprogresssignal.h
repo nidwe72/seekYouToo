@@ -19,6 +19,13 @@ public:
     double getValue();
     void setValue(double value);
 
+    double getValue2();
+    void setValue2(double value2);
+
+
+    double getMaximumValue();
+    void setMaximumValue(double value);
+
     void setType(Type type);
     Type getType() const;
 
@@ -28,6 +35,8 @@ public:
 private:
     Type type;
     double value;
+    double value2;
+    double maximumValue;
     SimulationExecutionPlanEntry* executionPlanEntry;
 
 };

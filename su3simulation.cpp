@@ -15,18 +15,21 @@ void SU3Simulation::start()
 
     QVector<SimulationExecutionPlanEntry*> entries=*this->getExecutionPlan()->getEntries();
 
+
     for(SimulationExecutionPlanEntry* executionPlanEntry  : entries)
     {
         double beta=executionPlanEntry->getBeta();
         int nth = executionPlanEntry->totalCyclesCount;
-
-        int lsz = 12; // Lattice size
+        int lsz =executionPlan->getLatticeSize();
 
         SimulationProgressSignal* simulationProgressSignalBeta=new SimulationProgressSignal();
         simulationProgressSignalBeta->setType(SimulationProgressSignal::Type::Beta);
+        simulationProgressSignalBeta->setMaximumValue(executionPlan->getEntries()->size());
+        simulationProgressSignalBeta->setValue2(SimulationExecutionPlanUtil::getExecutionPlanEntryIndex(executionPlan,executionPlanEntry));
         simulationProgressSignalBeta->setValue(beta);
         simulationProgressSignalBeta->setExecutionPlanEntry(executionPlanEntry);
         emit on_SimulationProgressSignal(simulationProgressSignalBeta);
+
 
         Lattice* l = new Lattice(lsz, beta);
         l->reset(1.0, 0.0, 0.0, 0.0);
@@ -42,8 +45,7 @@ void SU3Simulation::start()
                 plaquettes.append(avr_wilson);
             }
 
-            qDebug() << "avr_wilson: " <<plaquettes;
-
+            //qDebug() << "avr_wilson: " <<plaquettes;
 
             SimulationResult* simulationResult=this->getSimulationResult();
             SimulationBetaResult* betaResult = simulationResult->getBetaResult(beta);
@@ -56,20 +58,30 @@ void SU3Simulation::start()
 
             emit on_SimulationMeasurementSignal(simulationMeasurementSignal);
 
-            //QThread::currentThread()->msleep(100);
-
             SimulationProgressSignal* simulationProgressSignal=new SimulationProgressSignal();
             simulationProgressSignal->setType(SimulationProgressSignal::Type::LatticeSweep);
-            double lsp=((double)(i+1))/((double)nth)*100.0;
-            simulationProgressSignal->setValue(lsp);
+            simulationProgressSignal->setValue(i);
+            simulationProgressSignal->setMaximumValue(nth);
             emit on_SimulationProgressSignal(simulationProgressSignal);
 
 
         }
 
+        SimulationProgressSignal* simulationProgressSignal=new SimulationProgressSignal();
+        simulationProgressSignal->setType(SimulationProgressSignal::Type::LatticeSweep);
+        simulationProgressSignal->setValue(nth);
+        simulationProgressSignal->setMaximumValue(nth);
+        emit on_SimulationProgressSignal(simulationProgressSignal);
 
-        //qDebug() << iter.key() << " : " << iter.value();
+
+        simulationProgressSignalBeta->setValue2(executionPlan->getEntries()->size());
+        simulationProgressSignalBeta->setValue(beta);
+        simulationProgressSignalBeta->setExecutionPlanEntry(executionPlanEntry);
+        emit on_SimulationProgressSignal(simulationProgressSignalBeta);
+
     }
+
+
 
 
 }

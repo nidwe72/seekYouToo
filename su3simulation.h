@@ -24,6 +24,8 @@
 #include "SimulationExecutionPlan.h"
 #include "SimulationExecutionPlanEntry.h"
 
+#include "SimulationExecutionPlanUtil.h"
+
 class SU3Simulation : public QObject
 {
     Q_OBJECT

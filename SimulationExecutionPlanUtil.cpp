@@ -10,10 +10,12 @@ SimulationExecutionPlan* SimulationExecutionPlanUtil::createFastExecutionPlan()
     //QVector<double> betas{0.2,1.0,2.0,3.0,4.0,5.0};
     QVector<double> betas{2.0,3.0,4.0,5.0,0.2,1.0};
 
-    int totalCyclesCount=1;
-    int thermalizationCyclesCount=1;
+    int totalCyclesCount=10;
+    int thermalizationCyclesCount=5;
+    int latticeSize=8;
 
     SimulationExecutionPlan* result=new SimulationExecutionPlan();
+    result->setLatticeSize(latticeSize);
 
     QVector<SimulationExecutionPlanEntry *> *entries = new QVector<SimulationExecutionPlanEntry *>();
     for(double beta:betas){

@@ -23,25 +23,31 @@ QWidget *SimulationProgressWidget::getContentWidget()
     defaultPanelProgressLatticeSite->init();
     layout->addWidget(defaultPanelProgressLatticeSite,0,0);
 
-    DefaultPanel* defaultPanelProgressBeta=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
-    defaultPanelProgressBeta->getHeaderLabel()->setText(QString("<center>measure</center>"));
-    defaultPanelProgressBeta->setContentWidget(new ProgressCircle);
-    defaultPanelProgressBeta->init();
-    layout->addWidget(defaultPanelProgressBeta,0,1);
+    DefaultPanel* defaultPanelProgressMeasure=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
+    this->progressCircleLatticeMeasure=new ProgressCircle();
+    this->progressCircleLatticeMeasure->setMaximum(100);
+    this->progressCircleLatticeMeasure->setColor(QColor(Qt::green));
+    defaultPanelProgressMeasure->getHeaderLabel()->setText(QString("<center>measure</center>"));
+    defaultPanelProgressMeasure->setContentWidget(this->progressCircleLatticeMeasure);
+    defaultPanelProgressMeasure->init();
+    layout->addWidget(defaultPanelProgressMeasure,0,1);
 
     DefaultPanel* defaultPanelProgressLatticeSweep=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
-    this->progressCircleLatticeSweep=new ProgressCircle();
+    this->progressCircleLatticeSweep=new ProgressCircle();    
     this->progressCircleLatticeSweep->setMaximum(100);
     this->progressCircleLatticeSweep->setColor(QColor(Qt::green));
     defaultPanelProgressLatticeSweep->getHeaderLabel()->setText(QString("<center>cycles</center>"));
-    defaultPanelProgressLatticeSweep->setContentWidget(progressCircleLatticeSweep);
+    defaultPanelProgressLatticeSweep->setContentWidget(this->progressCircleLatticeSweep);
     defaultPanelProgressLatticeSweep->init();
     layout->addWidget(defaultPanelProgressLatticeSweep,0,2);
 
     layout->addWidget(new ProgressCircle,0,3);
     DefaultPanel* defaultPanelProgressTotal=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
     defaultPanelProgressTotal->getHeaderLabel()->setText(QString("<center>betas</center>"));
-    defaultPanelProgressTotal->setContentWidget(new ProgressCircle);
+    this->progressCircleBeta=new ProgressCircle();
+    this->progressCircleBeta->setMaximum(6);
+    this->progressCircleBeta->setColor(QColor(Qt::green));
+    defaultPanelProgressTotal->setContentWidget(this->progressCircleBeta);
     defaultPanelProgressTotal->init();
     layout->addWidget(defaultPanelProgressTotal,0,3);
 

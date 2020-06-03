@@ -10,7 +10,7 @@ SimulationWidget::SimulationWidget(QWidget *parent) : QWidget(parent)
     this->setLayout(layout);
 
     this->executionPlanWidget= SimulationExecutionPlanWidget::createInstance();
-    this->executionPlanWidget->getHeaderLabel()->setText(QString("executin plan"));
+    this->executionPlanWidget->getHeaderLabel()->setText(QString("execution plan"));
     this->executionPlanWidget->init();
     layout->addWidget(this->executionPlanWidget,0,0);
 
@@ -33,9 +33,12 @@ void SimulationWidget::handleSimulationProgressSignal(SimulationProgressSignal* 
             break;
         case SimulationProgressSignal::Type::LatticeSweep:
             this->simulationProgressWidget->progressCircleLatticeSweep->setValue(value);
+            this->simulationProgressWidget->progressCircleLatticeSweep->setMaximum(simulationProgressSignal->getMaximumValue());
             break;
         case SimulationProgressSignal::Type::Beta:
             this->executionPlanWidget->update(simulationProgressSignal->getExecutionPlanEntry());
+            this->simulationProgressWidget->progressCircleBeta->setMaximum(simulationProgressSignal->getMaximumValue());
+            this->simulationProgressWidget->progressCircleBeta->setValue(simulationProgressSignal->getValue2());
             break;
     }
 

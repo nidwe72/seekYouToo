@@ -71,6 +71,7 @@ void SimulationExecutionPlanWidget::update(SimulationExecutionPlanEntry *simulat
 
 
 
+
 }
 
 QCategoryAxis *SimulationExecutionPlanWidget::getXAxis()

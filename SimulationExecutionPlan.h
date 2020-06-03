@@ -9,8 +9,12 @@ class SimulationExecutionPlan
 public:
     SimulationExecutionPlan();    
     QVector<SimulationExecutionPlanEntry*>* entries;
-    QVector<SimulationExecutionPlanEntry*>* getEntries();
+    QVector<SimulationExecutionPlanEntry*>* getEntries();    
+    double getLatticeSize();
+    void setLatticeSize(int latticeSize);
+
 private:
+       int latticeSize;
 
 };
 
