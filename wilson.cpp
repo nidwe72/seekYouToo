@@ -1,13 +1,18 @@
 #include "wilson.h"
 
-Wilson::Wilson()
+Wilson::Wilson(QObject *parent) : QObject(parent)
 {
 
 }
 
+Wilson::~Wilson(){
+}
+
+
+
 double Wilson::average(Lattice* lattice,int height, int width) {
     LatticeSubset latticeSubset(0,lattice->hypervolume, width, height);
-    double total_sum=wilsonSubset(lattice,latticeSubset);
+    double total_sum=this->wilsonSubset(lattice,latticeSubset);
     // two for scaling
     double result = total_sum / (2 * 6 * lattice->hypervolume);
     return result;
@@ -23,12 +28,28 @@ double Wilson::wilsonSubset(Lattice* lattice,LatticeSubset latticeSubset) {
     int width = latticeSubset.getWidth();
     int height = latticeSubset.getHeight();
 
+    int stepsOnePercent=std::ceil(lattice->hypervolume/100.0);
+
     for (int id = from; id < to; id++) {
+
+
         for (int mu = 1; mu < 4; mu++) {
             for (int nu = 0; nu < mu; nu++) {
-                sum += wilsonLoop(lattice,id, mu, nu, height, width);
+                sum += this->wilsonLoop(lattice,id, mu, nu, height, width);
             }
         }
+
+        if(id%stepsOnePercent){
+            SimulationProgressSignal* simulationProgressSignal=new SimulationProgressSignal();
+            simulationProgressSignal->setType(SimulationProgressSignal::Type::MeasurementLatticeSite);
+            simulationProgressSignal->setMaximumValue(lattice->hypervolume*6);
+            simulationProgressSignal->setValue(lattice->hypervolume*(width-1)+id);
+
+            emit on_SimulationProgressSignal(simulationProgressSignal);
+        }
+
+
+
     }
     return sum;
 }

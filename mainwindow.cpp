@@ -22,9 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     lineEdit=new QLineEdit;
 
-
-
-
     SimulationExecutionPlan* executionPlan = SimulationExecutionPlanUtil::createFastExecutionPlan();
 
     SimulationWidget* simulationWidget=new SimulationWidget(this);

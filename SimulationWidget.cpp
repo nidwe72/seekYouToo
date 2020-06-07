@@ -40,6 +40,10 @@ void SimulationWidget::handleSimulationProgressSignal(SimulationProgressSignal* 
             this->simulationProgressWidget->progressCircleBeta->setMaximum(simulationProgressSignal->getMaximumValue());
             this->simulationProgressWidget->progressCircleBeta->setValue(simulationProgressSignal->getValue2());
             break;
+        case SimulationProgressSignal::Type::MeasurementLatticeSite:
+            this->simulationProgressWidget->progressCircleLatticeMeasure->setValue(simulationProgressSignal->getValue());
+            this->simulationProgressWidget->progressCircleLatticeMeasure->setMaximum(simulationProgressSignal->getMaximumValue()                                                                                     );
+            break;
     }
 
 }

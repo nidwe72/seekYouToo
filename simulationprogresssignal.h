@@ -14,7 +14,7 @@ class SimulationProgressSignal : public QObject
 public:
     SimulationProgressSignal();
 
-    enum Type { LatticeSite, LatticeSweep, Beta };
+    enum Type { LatticeSite, LatticeSweep, Beta, MeasurementLatticeSite };
 
     double getValue();
     void setValue(double value);

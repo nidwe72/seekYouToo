@@ -39,6 +39,8 @@ public:
     void update(Lattice* lattice);
     void setExecutionPlan(SimulationExecutionPlan* simulationExecutionPlan);
     SimulationExecutionPlan* getExecutionPlan();
+    void handleSimulationProgressSignal(SimulationProgressSignal *simulationProgressSignal);
+
 
 
 signals:

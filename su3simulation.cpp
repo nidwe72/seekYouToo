@@ -19,7 +19,10 @@ void SU3Simulation::start()
     for(SimulationExecutionPlanEntry* executionPlanEntry  : entries)
     {
         double beta=executionPlanEntry->getBeta();
-        int nth = executionPlanEntry->totalCyclesCount;
+        int totalCyclesCount = executionPlanEntry->totalCyclesCount;
+
+        int thermalizationCyclesCount = executionPlanEntry->thermalizationCyclesCount;
+
         int lsz =executionPlan->getLatticeSize();
 
         SimulationProgressSignal* simulationProgressSignalBeta=new SimulationProgressSignal();
@@ -30,47 +33,69 @@ void SU3Simulation::start()
         simulationProgressSignalBeta->setExecutionPlanEntry(executionPlanEntry);
         emit on_SimulationProgressSignal(simulationProgressSignalBeta);
 
-
         Lattice* l = new Lattice(lsz, beta);
         l->reset(1.0, 0.0, 0.0, 0.0);
         l->calculate_neighbors();
 
-        for (int i = 0; i < nth; i++) {
+        Wilson* wilson=new Wilson();
+
+
+        QObject::connect(
+            wilson,
+            &Wilson::on_SimulationProgressSignal,
+            this,
+            &SU3Simulation::handleSimulationProgressSignal,Qt::QueuedConnection);
+
+
+        for (int i = 0; i < totalCyclesCount; i++) {
+
+            SimulationProgressSignal* simulationProgressSignalMeasurementLatticeSite=new SimulationProgressSignal();
+            simulationProgressSignalMeasurementLatticeSite->setType(SimulationProgressSignal::Type::MeasurementLatticeSite);
+            simulationProgressSignalMeasurementLatticeSite->setValue(0);
+            simulationProgressSignalMeasurementLatticeSite->setMaximumValue(l->hypervolume*6);
+            emit on_SimulationProgressSignal(simulationProgressSignalMeasurementLatticeSite);
 
             this->update(l);
 
-            QVector<double> plaquettes;
-            for (int wilsonLoopSize = 1; wilsonLoopSize <= 6; wilsonLoopSize++) {
-                double avr_wilson = Wilson::average(l,wilsonLoopSize,wilsonLoopSize);
-                plaquettes.append(avr_wilson);
+            SimulationProgressSignal* simulationProgressSignalLatticeSweep=new SimulationProgressSignal();
+            simulationProgressSignalLatticeSweep->setType(SimulationProgressSignal::Type::LatticeSweep);
+            simulationProgressSignalLatticeSweep->setValue(i);
+            simulationProgressSignalLatticeSweep->setMaximumValue(totalCyclesCount);
+            emit on_SimulationProgressSignal(simulationProgressSignalLatticeSweep);
+
+            if(i>=thermalizationCyclesCount){
+                QVector<double> plaquettes;
+                for (int wilsonLoopSize = 1; wilsonLoopSize <= 6; wilsonLoopSize++) {
+                    double avr_wilson = wilson->average(l,wilsonLoopSize,wilsonLoopSize);
+                    plaquettes.append(avr_wilson);
+                }
+
+                SimulationResult* simulationResult=this->getSimulationResult();
+                SimulationBetaResult* betaResult = simulationResult->getBetaResult(beta);
+                betaResult->plaquettes=plaquettes;
+
+                SimulationMeasurementSignal* simulationMeasurementSignal=new SimulationMeasurementSignal();
+                simulationMeasurementSignal->setPlaquettes(plaquettes);
+                simulationMeasurementSignal->setPlaquettesMeans(plaquettes);
+                simulationMeasurementSignal->setPlaquettesStdDevs(plaquettes);
+                emit on_SimulationMeasurementSignal(simulationMeasurementSignal);
+
             }
+
+
+            emit on_SimulationProgressSignal(simulationProgressSignalMeasurementLatticeSite);
+
 
             //qDebug() << "avr_wilson: " <<plaquettes;
 
-            SimulationResult* simulationResult=this->getSimulationResult();
-            SimulationBetaResult* betaResult = simulationResult->getBetaResult(beta);
-            betaResult->plaquettes=plaquettes;
-
-            SimulationMeasurementSignal* simulationMeasurementSignal=new SimulationMeasurementSignal();
-            simulationMeasurementSignal->setPlaquettes(plaquettes);
-            simulationMeasurementSignal->setPlaquettesMeans(plaquettes);
-            simulationMeasurementSignal->setPlaquettesStdDevs(plaquettes);
-
-            emit on_SimulationMeasurementSignal(simulationMeasurementSignal);
-
-            SimulationProgressSignal* simulationProgressSignal=new SimulationProgressSignal();
-            simulationProgressSignal->setType(SimulationProgressSignal::Type::LatticeSweep);
-            simulationProgressSignal->setValue(i);
-            simulationProgressSignal->setMaximumValue(nth);
-            emit on_SimulationProgressSignal(simulationProgressSignal);
 
 
         }
 
         SimulationProgressSignal* simulationProgressSignal=new SimulationProgressSignal();
         simulationProgressSignal->setType(SimulationProgressSignal::Type::LatticeSweep);
-        simulationProgressSignal->setValue(nth);
-        simulationProgressSignal->setMaximumValue(nth);
+        simulationProgressSignal->setValue(totalCyclesCount);
+        simulationProgressSignal->setMaximumValue(totalCyclesCount);
         emit on_SimulationProgressSignal(simulationProgressSignal);
 
 
@@ -189,6 +214,11 @@ void SU3Simulation::setExecutionPlan(SimulationExecutionPlan* simulationExecutio
 SimulationExecutionPlan *SU3Simulation::getExecutionPlan()
 {
     return this->executionPlan;
+}
+
+void SU3Simulation::handleSimulationProgressSignal(SimulationProgressSignal *simulationProgressSignal)
+{
+    emit on_SimulationProgressSignal(simulationProgressSignal);
 }
 
 
