@@ -15,7 +15,10 @@ SimulationExecutionPlan *SimulationExecutionPlanWidget::getExecutionPlan()
 
 void SimulationExecutionPlanWidget::setExecutionPlan(SimulationExecutionPlan *executionPlan)
 {
-    this->executionPlan=executionPlan;
+    this->executionPlan=executionPlan;    
+    this->getTotalCountLcdNumber()->display(executionPlan->getEntries()->first()->totalCyclesCount);
+    this->getThermalizationCountLcdNumber()->display(executionPlan->getEntries()->first()->thermalizationCyclesCount);
+    this->getLatticeSizeLcdNumberLcdNumber()->display(executionPlan->getLatticeSize());
 }
 
 void SimulationExecutionPlanWidget::update(SimulationExecutionPlanEntry *simulationExecutionPlanEntry)
@@ -119,9 +122,9 @@ QLCDNumber *SimulationExecutionPlanWidget::getBetaLcdNumber()
         this->betaLcdNumber->setStyleSheet("QLCDNumber { background-color : black; color : #76EE00; }");
         this->betaLcdNumber->setSegmentStyle(QLCDNumber::Flat);
 
-        this->betaLcdNumber->display(2.1);
+
         this->betaLcdNumber->setDigitCount(3);        
-        this->betaLcdNumber->setFixedWidth(110);
+        this->betaLcdNumber->setFixedWidth(120);
     }
     return this->betaLcdNumber;
 }
@@ -157,6 +160,52 @@ QChartView *SimulationExecutionPlanWidget::getChartView()
 
 }
 
+QLCDNumber *SimulationExecutionPlanWidget::getTotalCountLcdNumber()
+{
+
+    if(this->totalCountLcdNumber==nullptr){
+        this->totalCountLcdNumber=new QLCDNumber();
+        this->totalCountLcdNumber->setStyleSheet("QLCDNumber { background-color : black; color : #76EE00; }");
+        this->totalCountLcdNumber->setSegmentStyle(QLCDNumber::Flat);
+        this->totalCountLcdNumber->setDigitCount(2);
+        this->totalCountLcdNumber->setFixedWidth(80);
+    }
+    return this->totalCountLcdNumber;
+}
+
+QLCDNumber *SimulationExecutionPlanWidget::getThermalizationCountLcdNumber()
+{
+    if(this->thermalizationCountLcdNumber==nullptr){
+        this->thermalizationCountLcdNumber=new QLCDNumber();
+        this->thermalizationCountLcdNumber->setStyleSheet("QLCDNumber { background-color : black; color : #76EE00; }");
+        this->thermalizationCountLcdNumber->setSegmentStyle(QLCDNumber::Flat);
+        this->thermalizationCountLcdNumber->setDigitCount(2);
+        this->thermalizationCountLcdNumber->setFixedWidth(80);
+    }
+    return this->thermalizationCountLcdNumber;
+
+}
+
+QLCDNumber *SimulationExecutionPlanWidget::getLatticeSizeLcdNumberLcdNumber()
+{
+    if(this->latticeSizeLcdNumber==nullptr){
+        this->latticeSizeLcdNumber=new QLCDNumber();
+        this->latticeSizeLcdNumber->setStyleSheet("QLCDNumber { background-color : black; color : #76EE00; }");
+        this->latticeSizeLcdNumber->setSegmentStyle(QLCDNumber::Flat);
+        this->latticeSizeLcdNumber->setDigitCount(2);
+        this->latticeSizeLcdNumber->setFixedWidth(80);
+    }
+    return this->latticeSizeLcdNumber;
+
+
+}
+
+
+
+
+
+
+
 void SimulationExecutionPlanWidget::paintEvent(QPaintEvent *)
 {
     QStyleOption opt;
@@ -186,6 +235,37 @@ QWidget* SimulationExecutionPlanWidget::getContentWidget(){
     chartPanel->getHeaderLabel()->setText(QString("<center>beta values</center>"));
     chartPanel->init();
     layout->addWidget(chartPanel,0,1);
+
+
+
+    QWidget* widgetRight=new QWidget();
+    widgetRight->setFixedWidth(80);
+    QGridLayout* layoutWidgetRight=new QGridLayout();
+    layoutWidgetRight->setContentsMargins(0,0,0,0);
+    widgetRight->setLayout(layoutWidgetRight);
+    layout->addWidget(widgetRight,0,2);
+
+
+
+    DefaultPanel* totalCountWidget=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
+    totalCountWidget->getHeaderLabel()->setText(QString("<center>total count</center>"));
+    totalCountWidget->setContentWidget(this->getTotalCountLcdNumber());
+    totalCountWidget->init();
+    layoutWidgetRight->addWidget(totalCountWidget,0,0);
+
+    DefaultPanel* thermalizationCountWidget=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
+    thermalizationCountWidget->getHeaderLabel()->setText(QString("<center>therm. count</center>"));
+    thermalizationCountWidget->setContentWidget(this->getThermalizationCountLcdNumber());
+    thermalizationCountWidget->init();
+    layoutWidgetRight->addWidget(thermalizationCountWidget,1,0);
+
+    DefaultPanel* latticeSizeWidget=DefaultPanel::createInstance()->setOrientation(DefaultPanel::Orientation::Portrait);
+    latticeSizeWidget->getHeaderLabel()->setText(QString("<center>lattice size</center>"));
+    latticeSizeWidget->setContentWidget(this->getLatticeSizeLcdNumberLcdNumber());
+    latticeSizeWidget->init();
+    layoutWidgetRight->addWidget(latticeSizeWidget,2,0);
+
+
 
     return this->contentWidget;
 

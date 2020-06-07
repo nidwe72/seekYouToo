@@ -57,6 +57,16 @@ private:
     QChartView* chartView=nullptr;
     QChartView* getChartView();
 
+    QLCDNumber* totalCountLcdNumber=nullptr;
+    QLCDNumber* getTotalCountLcdNumber();
+
+    QLCDNumber* thermalizationCountLcdNumber=nullptr;
+    QLCDNumber* getThermalizationCountLcdNumber();
+
+    QLCDNumber* latticeSizeLcdNumber=nullptr;
+    QLCDNumber* getLatticeSizeLcdNumberLcdNumber();
+
+
 
 
 signals:

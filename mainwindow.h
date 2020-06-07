@@ -65,22 +65,13 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-signals:
-    void signal_stopSimulation();
-
-public slots:
-    void on_buttonStart_clicked();
-
 private:
     SU3Simulation* su3Simulation;
     QPushButton* buttonStart;
     QLineEdit* lineEdit;
     QFuture<void> simulationFuture;
-    ProgressCircle* progressCircle;
-    //QWebEngineView* test();
+    ProgressCircle* progressCircle;    
     SimulationWidget* simulationWidget;
-    QString getDoc1();
-
 
 
 };
