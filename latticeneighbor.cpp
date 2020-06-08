@@ -4,3 +4,8 @@ LatticeNeighbor::LatticeNeighbor()
 {
 
 }
+
+LatticeNeighbor::~LatticeNeighbor()
+{
+
+}

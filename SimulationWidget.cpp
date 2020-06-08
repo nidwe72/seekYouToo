@@ -22,7 +22,7 @@ SimulationWidget::SimulationWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-void SimulationWidget::handleSimulationProgressSignal(SimulationProgressSignal* simulationProgressSignal)
+void SimulationWidget::handleSimulationProgressSignal(QSharedPointer<SimulationProgressSignal> simulationProgressSignal)
 {
     double value=simulationProgressSignal->getValue();
     SimulationProgressSignal::Type simulationSignalType=simulationProgressSignal->getType();
@@ -48,7 +48,7 @@ void SimulationWidget::handleSimulationProgressSignal(SimulationProgressSignal* 
 
 }
 
-void SimulationWidget::handleSimulationMeasurementSignal(SimulationMeasurementSignal *simulationMeasurementSignal)
+void SimulationWidget::handleSimulationMeasurementSignal(QSharedPointer<SimulationMeasurementSignal> simulationMeasurementSignal)
 {
     QVector<double> plaquettes=simulationMeasurementSignal->getPlaquettes();
     QVector<double> plaquettesStdDevs=simulationMeasurementSignal->getPlaquettesStdDevs();
@@ -59,6 +59,7 @@ void SimulationWidget::handleSimulationMeasurementSignal(SimulationMeasurementSi
         (this->wilsonLoopWidgets)[i]->updateplaquetteStdDevLcdNumber(plaquettesStdDevs[i]);
         (this->wilsonLoopWidgets)[i]->updatePlaquetteLcdNumber(plaquettes[i]);
     }
+
 }
 
 void SimulationWidget::setExecutionPlan(SimulationExecutionPlan *simulationExecutionPlan)

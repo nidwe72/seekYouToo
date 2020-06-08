@@ -25,7 +25,7 @@ void SU3Simulation::start()
 
         int lsz =executionPlan->getLatticeSize();
 
-        SimulationProgressSignal* simulationProgressSignalBeta=new SimulationProgressSignal();
+        QSharedPointer<SimulationProgressSignal> simulationProgressSignalBeta(new SimulationProgressSignal());
         simulationProgressSignalBeta->setType(SimulationProgressSignal::Type::Beta);
         simulationProgressSignalBeta->setMaximumValue(executionPlan->getEntries()->size());
         simulationProgressSignalBeta->setValue2(SimulationExecutionPlanUtil::getExecutionPlanEntryIndex(executionPlan,executionPlanEntry));
@@ -33,7 +33,8 @@ void SU3Simulation::start()
         simulationProgressSignalBeta->setExecutionPlanEntry(executionPlanEntry);
         emit on_SimulationProgressSignal(simulationProgressSignalBeta);
 
-        Lattice* l = new Lattice(lsz, beta);
+        QSharedPointer<Lattice> l(new Lattice(lsz, beta));
+
         l->reset(1.0, 0.0, 0.0, 0.0);
         l->calculate_neighbors();
 
@@ -49,7 +50,7 @@ void SU3Simulation::start()
 
         for (int i = 0; i < totalCyclesCount; i++) {
 
-            SimulationProgressSignal* simulationProgressSignalMeasurementLatticeSite=new SimulationProgressSignal();
+            QSharedPointer<SimulationProgressSignal> simulationProgressSignalMeasurementLatticeSite(new SimulationProgressSignal());
             simulationProgressSignalMeasurementLatticeSite->setType(SimulationProgressSignal::Type::MeasurementLatticeSite);
             simulationProgressSignalMeasurementLatticeSite->setValue(0);
             simulationProgressSignalMeasurementLatticeSite->setMaximumValue(l->hypervolume*6);
@@ -57,7 +58,7 @@ void SU3Simulation::start()
 
             this->update(l);
 
-            SimulationProgressSignal* simulationProgressSignalLatticeSweep=new SimulationProgressSignal();
+            QSharedPointer<SimulationProgressSignal> simulationProgressSignalLatticeSweep(new SimulationProgressSignal());
             simulationProgressSignalLatticeSweep->setType(SimulationProgressSignal::Type::LatticeSweep);
             simulationProgressSignalLatticeSweep->setValue(i);
             simulationProgressSignalLatticeSweep->setMaximumValue(totalCyclesCount);
@@ -74,7 +75,7 @@ void SU3Simulation::start()
                 SimulationBetaResult* betaResult = simulationResult->getBetaResult(beta);
                 betaResult->plaquettes=plaquettes;
 
-                SimulationMeasurementSignal* simulationMeasurementSignal=new SimulationMeasurementSignal();
+                QSharedPointer<SimulationMeasurementSignal> simulationMeasurementSignal(new SimulationMeasurementSignal());
                 simulationMeasurementSignal->setPlaquettes(plaquettes);
                 simulationMeasurementSignal->setPlaquettesMeans(plaquettes);
                 simulationMeasurementSignal->setPlaquettesStdDevs(plaquettes);
@@ -92,7 +93,7 @@ void SU3Simulation::start()
 
         }
 
-        SimulationProgressSignal* simulationProgressSignal=new SimulationProgressSignal();
+        QSharedPointer<SimulationProgressSignal> simulationProgressSignal(new SimulationProgressSignal());
         simulationProgressSignal->setType(SimulationProgressSignal::Type::LatticeSweep);
         simulationProgressSignal->setValue(totalCyclesCount);
         simulationProgressSignal->setMaximumValue(totalCyclesCount);
@@ -117,7 +118,7 @@ void SU3Simulation::stop()
     simulationStarted=false;
 }
 
-void SU3Simulation::updateLink(Lattice* lattice,int id, int mu) {
+void SU3Simulation::updateLink(QSharedPointer<Lattice> lattice,int id, int mu) {
 
 
     //qDebug() << "running...";
@@ -127,7 +128,7 @@ void SU3Simulation::updateLink(Lattice* lattice,int id, int mu) {
     double a;
     double sq;
 
-    SuN staple = Staples::staples(lattice,id, mu);
+    SuN staple = Staples::staples(lattice.data(),id, mu);
 
     double k = sqrt(SuN::determinant(staple));
 
@@ -165,7 +166,7 @@ void SU3Simulation::updateLink(Lattice* lattice,int id, int mu) {
     lattice->setSiteLink(id, mu,new SuN(g));
 }
 
-void SU3Simulation::updateSubset(Lattice* lattice,LatticeSubset* latticeSubset) {
+void SU3Simulation::updateSubset(QSharedPointer<Lattice> lattice,LatticeSubset* latticeSubset) {
 
     int from = latticeSubset->getFrom();
     int to = latticeSubset->getTo();
@@ -183,7 +184,7 @@ void SU3Simulation::updateSubset(Lattice* lattice,LatticeSubset* latticeSubset) 
         progress=(int)(index/((double)lattice->hypervolume)*100.0);
         if(previousProgress<progress){
             previousProgress=progress;
-            SimulationProgressSignal* simulationSignal=new SimulationProgressSignal();
+            QSharedPointer<SimulationProgressSignal> simulationSignal(new SimulationProgressSignal());
             simulationSignal->setType(SimulationProgressSignal::Type::LatticeSite);
             simulationSignal->setValue(progress);
             emit on_SimulationProgressSignal(simulationSignal);
@@ -201,7 +202,7 @@ SimulationResult *SU3Simulation::getSimulationResult()
     return this->simulationResult;
 }
 
-void SU3Simulation::update(Lattice* lattice) {
+void SU3Simulation::update(QSharedPointer<Lattice> lattice) {
     LatticeSubset* latticeSubset = new LatticeSubset(0,lattice->hypervolume);
     this->updateSubset(lattice,latticeSubset);
 }
@@ -216,7 +217,7 @@ SimulationExecutionPlan *SU3Simulation::getExecutionPlan()
     return this->executionPlan;
 }
 
-void SU3Simulation::handleSimulationProgressSignal(SimulationProgressSignal *simulationProgressSignal)
+void SU3Simulation::handleSimulationProgressSignal(QSharedPointer<SimulationProgressSignal>simulationProgressSignal)
 {
     emit on_SimulationProgressSignal(simulationProgressSignal);
 }

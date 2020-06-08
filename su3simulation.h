@@ -36,16 +36,16 @@ public:
     ~SU3Simulation();
     QSharedPointer<SuN> test();
     void test2(QSharedPointer<SuN>& sun);
-    void update(Lattice* lattice);
+    void update(QSharedPointer<Lattice> lattice);
     void setExecutionPlan(SimulationExecutionPlan* simulationExecutionPlan);
     SimulationExecutionPlan* getExecutionPlan();
-    void handleSimulationProgressSignal(SimulationProgressSignal *simulationProgressSignal);
+    void handleSimulationProgressSignal(QSharedPointer<SimulationProgressSignal> simulationProgressSignal);
 
 
 
 signals:
-    void on_SimulationProgressSignal(SimulationProgressSignal* simulationSignal);
-    void on_SimulationMeasurementSignal(SimulationMeasurementSignal* simulationMeasurementSignal);
+    void on_SimulationProgressSignal(QSharedPointer<SimulationProgressSignal> simulationSignal);
+    void on_SimulationMeasurementSignal(QSharedPointer<SimulationMeasurementSignal> simulationMeasurementSignal);
 
 public slots:
     void start();
@@ -54,8 +54,8 @@ public slots:
 private:
     bool simulationStarted;
     float currentNumber=0.42516528;
-    void updateLink(Lattice* lattice,int id, int mu);
-    void updateSubset(Lattice* lattice, LatticeSubset* latticeSubset);    
+    void updateLink(QSharedPointer<Lattice> lattice,int id, int mu);
+    void updateSubset(QSharedPointer<Lattice> lattice, LatticeSubset* latticeSubset);
     SimulationResult* simulationResult=nullptr;
     SimulationResult* getSimulationResult();
     SimulationExecutionPlan* executionPlan;

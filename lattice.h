@@ -2,6 +2,7 @@
 #define LATTICE_H
 
 #include <QObject>
+#include <QSharedPointer>
 #include "latticesite.h"
 #include "latticeneighbor.h"
 #include "sun.h"
@@ -13,7 +14,7 @@ public:
     explicit Lattice(int dim=0,double bt=0.0,QObject *parent = nullptr);
     int hypervolume = 0;
     double beta = 0;
-    SuN* getSiteLink(int n, int d);
+    QSharedPointer<SuN> getSiteLink(int n, int d);
     void setSiteLink(int n, int d, SuN* siteLink);
     int getIdFromOffset(int id, int to, int x0, int y0, int z0);
     int getIdFromPosition(int t, int x, int y, int z);
@@ -27,7 +28,7 @@ private:
     int area = 0;
     int volume = 0;
 
-    QVector<LatticeSite*> sites{};
+    QVector<QSharedPointer<LatticeSite>> sites{};
     QVector<LatticeNeighbor*> neighbors{};
 
 signals:

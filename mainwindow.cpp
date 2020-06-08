@@ -43,17 +43,17 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(mainWidget);
     setStyleSheet("QWidget { background-color : #001a00; color : #76EE00; }");
 
-    su3Simulation=new SU3Simulation(this);
-    su3Simulation->setExecutionPlan(executionPlan);
+    this->su3Simulation=new SU3Simulation(this);
+    this->su3Simulation->setExecutionPlan(executionPlan);
 
     QObject::connect(
-        su3Simulation,
+        this->su3Simulation,
         &SU3Simulation::on_SimulationProgressSignal,
         simulationWidget,
         &SimulationWidget::handleSimulationProgressSignal,Qt::QueuedConnection);
 
     QObject::connect(
-        su3Simulation,
+        this->su3Simulation,
         &SU3Simulation::on_SimulationMeasurementSignal,
         simulationWidget,
         &SimulationWidget::handleSimulationMeasurementSignal,Qt::QueuedConnection);

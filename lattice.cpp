@@ -10,14 +10,14 @@ Lattice::Lattice(int dim,double bt,QObject *parent) : QObject(parent)
     beta = bt;
 
     for (int i = 0; i < hypervolume; i++) {
-        sites.append(new LatticeSite());
+        sites.append(QSharedPointer<LatticeSite>(new LatticeSite()));
         neighbors.append(new LatticeNeighbor());
     }
 }
 
-SuN* Lattice::getSiteLink(int n, int d) {
+QSharedPointer<SuN> Lattice::getSiteLink(int n, int d) {
 
-    SuN* result;
+    QSharedPointer<SuN> result;
     switch (d) {
     case 0:
         result=sites.at(n)->at;
@@ -39,16 +39,16 @@ SuN* Lattice::getSiteLink(int n, int d) {
 void Lattice::setSiteLink(int n, int d, SuN* siteLink) {
     switch (d) {
     case 0:
-        sites.at(n)->at=siteLink;
+        sites.at(n)->at=QSharedPointer<SuN>(siteLink);
         break;
     case 1:
-        sites.at(n)->ax=siteLink;
+        sites.at(n)->ax=QSharedPointer<SuN>(siteLink);
         break;
     case 2:
-        sites.at(n)->ay=siteLink;
+        sites.at(n)->ay=QSharedPointer<SuN>(siteLink);
         break;
     case 3:
-        sites.at(n)->az=siteLink;
+        sites.at(n)->az=QSharedPointer<SuN>(siteLink);
         break;
     }
 }
@@ -124,7 +124,8 @@ int Lattice::getIdOfNeighbor(int id, int mu, int dist) {
 
 void Lattice::reset(double t, double x, double y, double z) {
 
-    foreach( LatticeSite* site, this->sites ){
+
+    foreach( QSharedPointer<LatticeSite> site, this->sites ){
         site->at->setValue(0,t);
         site->at->setValue(1,x);
         site->at->setValue(2,y);
@@ -144,8 +145,6 @@ void Lattice::reset(double t, double x, double y, double z) {
         site->az->setValue(1,x);
         site->az->setValue(2,y);
         site->az->setValue(3,z);
-
-
 
     }
 

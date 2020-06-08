@@ -15,15 +15,15 @@ public:
     explicit Wilson(QObject *parent = 0);
     ~Wilson();
 
-    double average(Lattice* lattice, int height, int width);
+    double average(QSharedPointer<Lattice> lattice, int height, int width);
 
 signals:
 
-    void on_SimulationProgressSignal(SimulationProgressSignal* simulationProgressSignal);
+    void on_SimulationProgressSignal(QSharedPointer<SimulationProgressSignal> simulationProgressSignal);
 
 private:    
-    double wilsonSubset(Lattice* lattice,LatticeSubset latticeSubset);
-    double wilsonLoop(Lattice* lattice, int id, int mu, int nu, int height, int width);
+    double wilsonSubset(QSharedPointer<Lattice> lattice,LatticeSubset latticeSubset);
+    double wilsonLoop(QSharedPointer<Lattice> lattice, int id, int mu, int nu, int height, int width);
 };
 
 #endif // WILSON_H

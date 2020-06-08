@@ -7,6 +7,7 @@ class LatticeNeighbor
 {
 public:
     LatticeNeighbor();
+    ~LatticeNeighbor();
     QVector<int> nb{0,0,0,0};
 };
 

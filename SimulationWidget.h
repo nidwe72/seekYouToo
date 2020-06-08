@@ -2,6 +2,7 @@
 #define SIMULATIONWIDGET_H
 
 #include <QWidget>
+#include <QSharedPointer>
 #include <QLabel>
 #include "wilsonloopwidget.h"
 #include "simulationprogresssignal.h"
@@ -16,8 +17,8 @@ class SimulationWidget : public QWidget
     Q_OBJECT
 public:
     explicit SimulationWidget(QWidget *parent = nullptr);
-    void handleSimulationProgressSignal(SimulationProgressSignal *simulationProgressSignal);
-    void handleSimulationMeasurementSignal(SimulationMeasurementSignal *simulationMeasurementSignal);
+    void handleSimulationProgressSignal(QSharedPointer<SimulationProgressSignal> simulationProgressSignal);
+    void handleSimulationMeasurementSignal(QSharedPointer<SimulationMeasurementSignal> simulationMeasurementSignal);
     void setExecutionPlan(SimulationExecutionPlan* simulationExecutionPlan);
     SimulationExecutionPlan* getExecutionPlan();
 
