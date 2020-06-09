@@ -1,7 +1,7 @@
 #ifndef LATTICENEIGHBOR_H
 #define LATTICENEIGHBOR_H
 
-#include <QObject>
+#include <QVector>
 
 class LatticeNeighbor
 {

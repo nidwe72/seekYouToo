@@ -27,7 +27,6 @@ SOURCES += \
     SimulationExecutionPlanUtil.cpp \
     SimulationExecutionPlanWidget.cpp \
     SimulationWidget.cpp \
-    TestWidget.cpp \
     VerticalLabel.cpp \
     lattice.cpp \
     latticeneighbor.cpp \
@@ -42,7 +41,6 @@ SOURCES += \
     simulationprogresssignal.cpp \
     simulationprogresswidget.cpp \
     simulationresult.cpp \
-    smartpointer.cpp \
     staples.cpp \
     statisticutil.cpp \
     su3simulation.cpp \
@@ -60,7 +58,6 @@ HEADERS += \
     SimulationExecutionPlanUtil.h \
     SimulationExecutionPlanWidget.h \
     SimulationWidget.h \
-    TestWidget.h \
     VerticalLabel.h \
     lattice.h \
     latticeneighbor.h \
@@ -74,7 +71,6 @@ HEADERS += \
     simulationprogresssignal.h \
     simulationprogresswidget.h \
     simulationresult.h \
-    smartpointer.h \
     staples.h \
     statisticutil.h \
     su3simulation.h \

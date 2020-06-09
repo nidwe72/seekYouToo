@@ -10,7 +10,6 @@ BrowserWidget::BrowserWidget(QWidget *parent) : QWidget(parent)
 
 void BrowserWidget::loadUrl(QString url)
 {
-    //QString msg = "http://edwin-roth.at/downloads/seekYouToo/docs/workman/workmanGuide.html";
     QMetaObject::invokeMethod(this->getContainer()->rootObject(), "setUrl",
             Q_ARG(QString, url));
 }

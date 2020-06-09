@@ -8,8 +8,6 @@
 #include <QSharedPointer>
 #include <QScopedPointer>
 
-#include "smartpointer.h"
-
 #include "sun.h"
 #include "lattice.h"
 #include "staples.h"

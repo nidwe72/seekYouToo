@@ -1,15 +1,8 @@
 #ifndef DOCUMENTATIONWIDGET_H
 #define DOCUMENTATIONWIDGET_H
 
-#include<QTabWidget>
-#include<QQuickView>
-#include <QQuickView>
-#include <QQmlContext>
 #include <QPushButton>
-#include <QTimer>
-
-#include "qquickitem.h"
-
+#include <QGridLayout>
 #include "BrowserWidget.h"
 
 

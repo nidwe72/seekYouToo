@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.2, 2020-06-08T15:24:08. -->
+<!-- Written by QtCreator 4.11.2, 2020-06-09T12:47:27. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -581,7 +581,6 @@
     <valuelist type="QVariantList" key="Android.PreStartShellCmdListKey"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SeekYouToo</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:/home/nidwe/development/qt/seekYouToo/SeekYouToo.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/nidwe/development/qt/seekYouToo/SeekYouToo.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>

@@ -2,14 +2,10 @@
 #define BROWSERWIDGET_H
 
 #include <QWidget>
-#include <QQuickView>
-
-#include <QUrl>
-
-#include <QQmlProperty>
-
 #include <QGridLayout>
-
+#include <QQuickView>
+#include <QUrl>
+#include <QQmlProperty>
 #include <QtQuickWidgets/QQuickWidget>
 
 #include "qquickitem.h"

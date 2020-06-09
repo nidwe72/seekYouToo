@@ -110,11 +110,9 @@ void Lattice::calculate_neighbors() {
 int Lattice::getIdOfNeighbor(int id, int mu, int dist) {
     int result = id;
     int usedDist = dist;
-    // assuming abs( dist ) < length
     if (usedDist < 0) {
         usedDist += length;
     }
-    // FIXXME:check whether index is okay
     while (usedDist > 0) {
         result=this->neighbors[result]->nb[mu];
         usedDist--;

@@ -49,10 +49,7 @@
 #include "SimulationWidget.h"
 #include "SimulationExecutionPlanUtil.h"
 
-#include "BrowserWidget.h"
 
-
-#include "qquickitem.h"
 
 
 using namespace QtWebView;

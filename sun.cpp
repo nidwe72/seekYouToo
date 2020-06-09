@@ -14,7 +14,6 @@ SuN::SuN(const SuN& obj):SuN()
 
 SuN::~SuN()
 {
-    //qDebug() << "desctruct";
     this->values.clear();
 }
 
