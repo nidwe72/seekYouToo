@@ -2,8 +2,9 @@
 #define SIMULATIONMEASUREMENTSIGNAL_H
 
 #include<QVector>
+#include <QObject>
 
-class SimulationMeasurementSignal
+class SimulationMeasurementSignal: public QObject
 {
     public:
         SimulationMeasurementSignal();

@@ -86,10 +86,7 @@ void SU3Simulation::start()
 
             emit on_SimulationProgressSignal(simulationProgressSignalMeasurementLatticeSite);
 
-
             //qDebug() << "avr_wilson: " <<plaquettes;
-
-
 
         }
 
